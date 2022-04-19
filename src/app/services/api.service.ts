@@ -13,7 +13,7 @@ export class ApiService {
   ) { }
 
   discoverMovies(apiQuery: string) {
-    let url: string = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&language=en-US&include_adult=false${apiQuery}`
+    let url: string = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false`
     return this._http.get(url)
   }
 

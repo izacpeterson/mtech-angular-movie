@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService {
+export class ApiService {
 
   apiKey: string = 'ad4c17b63f69186c73eb64bc2e5d9926'
 

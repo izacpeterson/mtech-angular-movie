@@ -27,4 +27,8 @@ export class ApiService {
     return this._http.get(url)
   }
 
+  searchMovies(queryString: string) {
+    let url: string = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&language=en-US&query=${queryString}page=1&include_adult=false`
+    return this._http.get(url)
+  }
 }

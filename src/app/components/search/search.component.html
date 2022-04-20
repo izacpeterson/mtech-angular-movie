@@ -1,6 +1,3 @@
-<!-- {{movies | json}} -->
-<!-- {{searchInput}} -->
-
 <div class="searchBar">
     <mat-form-field class="formField" appearance="fill">
         <mat-label>Search Movies</mat-label>
@@ -12,7 +9,7 @@
     <button mat-button (click)="getSearch()">Search</button>
 </div>
 
-
+<!-- Shows the default movies from the discover API call -->
 <div class="movieContainer" *ngIf="!hasSearched">
     <div *ngFor="let movie of movies">
         <mat-card class="card">
@@ -31,7 +28,8 @@
     </div>
 </div>
 
-<div class="movieContainer" *ngIf="hasSearched">
+<!-- Shows the movies from the search result -->
+<div class="movieContainer" *ngIf="hasResults">
     <div *ngFor="let movie of returnedMovies">
         <mat-card class="card">
             <mat-card-header>
@@ -49,4 +47,11 @@
             </mat-card-actions>
         </mat-card>
     </div>
+</div>
+
+<!-- Shows if there is no results -->
+<div *ngIf="!hasResults" class="noResultsMessage">
+    <h1>
+        No Movies Found
+    </h1>
 </div>

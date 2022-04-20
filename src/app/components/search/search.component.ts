@@ -7,19 +7,26 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  hasSearched: boolean = false;
+  returnedMovies: any;
   movies: any;
   searchInput = '';
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.getTrendingMovies().subscribe((data: any) => {
+    this.apiService.discoverMovies().subscribe((data: any) => {
       this.movies = data.results;
     })
   }
 
   getSearch() {
-    console.log(this.searchInput);
+    let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase()
+    this.apiService.searchMovies(filteredString).subscribe((data: any) => {
+      console.log(data.results);
+      this.returnedMovies = data.results
+    })
+    this.hasSearched = true
   }
 
 }

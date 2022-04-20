@@ -13,13 +13,33 @@
 </div>
 
 
-<div class="trendingContainer">
+<div class="movieContainer" *ngIf="!hasSearched">
     <div *ngFor="let movie of movies">
         <mat-card class="card">
             <mat-card-header>
                 <mat-card-title>{{movie.title}}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" alt="Photo of a Shiba Inu">
+            <img mat-card-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" alt="Poster">
+            <mat-card-content>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button routerLink="/details/{{movie.id}}">Details</button>
+                <button mat-button>Favorite</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+
+<div class="movieContainer" *ngIf="hasSearched">
+    <div *ngFor="let movie of returnedMovies">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>{{movie.title}}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image *ngIf="movie.backdrop_path" src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
+                alt="Poster">
+            <img mat-card-image *ngIf="!movie.backdrop_path" src="../../../assets/images/noPoster.png" alt="Not Found">
             <mat-card-content>
 
             </mat-card-content>

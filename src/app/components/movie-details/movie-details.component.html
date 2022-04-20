@@ -1,1 +1,7 @@
-<p>movie-details works!</p>
+<div>
+    <h1>{{movie.title}}</h1>
+    <h3>{{movie.tagline}}</h3>
+    <img [src]="imageURL+'w780/'+movie.backdrop_path" alt="">
+
+    <p>{{movie.overview}}</p>
+</div>

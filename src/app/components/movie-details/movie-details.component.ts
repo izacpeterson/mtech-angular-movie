@@ -11,7 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class MovieDetailsComponent implements OnInit {
   movieId: number = 634649;
-  movie: MovieDetails = {}
+  movie: MovieDetails = {};
+  imageURL: string = `https://image.tmdb.org/t/p/`
 
   constructor(
     private route: ActivatedRoute,
@@ -21,21 +22,10 @@ export class MovieDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getMovieDetails(this.movieId).pipe(
       map((res: any) => {
-        // console.log(res);
         this.movie = res;
         console.log('movie info', this.movie);
-
-      }),
-      // tap(movie => this.movie = movie)
-    ).subscribe()
-  }
-
-  getMovieDetails() {
-    this.apiService.getMovieDetails(this.movieId).pipe(
-      map((res: any) => {
-        console.log(res);
-
       })
     ).subscribe()
   }
+
 }

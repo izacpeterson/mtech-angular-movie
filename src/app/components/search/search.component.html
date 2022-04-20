@@ -37,7 +37,8 @@
             </mat-card-header>
             <img mat-card-image *ngIf="movie.backdrop_path" src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
                 alt="Poster">
-            <img mat-card-image *ngIf="!movie.backdrop_path" src="../../../assets/images/noPoster.png" alt="Not Found">
+            <img class="notFoundImage" mat-card-image *ngIf="!movie.backdrop_path"
+                src="../../../assets/images/noPoster.png" alt="Not Found">
             <mat-card-content>
 
             </mat-card-content>

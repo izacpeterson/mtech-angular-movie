@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { MovieDetails } from 'src/app/interfaces/movie-details';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./movie-details.component.scss']
 })
 export class MovieDetailsComponent implements OnInit {
-  movieId: number = 634649;
+  movieId: number = 0;
   movie: MovieDetails = {};
   imageURL: string = `https://image.tmdb.org/t/p/`
 
@@ -20,6 +20,9 @@ export class MovieDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.route.params.pipe(
+      switchMap(params => this.movieId = params['id'])
+    ).subscribe();
     this.apiService.getMovieDetails(this.movieId).pipe(
       map((res: any) => {
         this.movie = res;

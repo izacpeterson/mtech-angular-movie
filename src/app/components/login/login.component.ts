@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   app = initializeApp(environment.firebaseConfig);
 
-  loginUser() {
+  loginUser(): void {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)

@@ -12,8 +12,8 @@ export class ApiService {
     private _http: HttpClient
   ) { }
 
-  discoverMovies(apiQuery: string) {
-    let url: string = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&language=en-US&include_adult=false${apiQuery}`
+  discoverMovies() {
+    let url: string = `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false`
     return this._http.get(url)
   }
 
@@ -27,4 +27,8 @@ export class ApiService {
     return this._http.get(url)
   }
 
+  searchMovies(queryString: string) {
+    let url: string = `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&language=en-US&query=${queryString}page=1&include_adult=false`
+    return this._http.get(url)
+  }
 }

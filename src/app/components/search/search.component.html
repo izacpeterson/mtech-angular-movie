@@ -9,44 +9,24 @@
     <button mat-button (click)="getSearch()">Search</button>
 </div>
 
-<!-- Shows the default movies from the discover API call -->
 <div class="movieContainer" *ngIf="!hasSearched">
     <div *ngFor="let movie of movies">
-        <mat-card class="card">
-            <mat-card-header>
-                <mat-card-title>{{movie.title}}</mat-card-title>
-            </mat-card-header>
-            <img mat-card-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" alt="Poster">
-            <mat-card-content>
-
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button routerLink="/details/{{movie.id}}">Details</button>
-                <button mat-button>Favorite</button>
-            </mat-card-actions>
-        </mat-card>
+        <div class="customCard" routerLink="/details/{{movie.id}}">
+            <h3 class="centered">{{movie.title}}</h3>
+            <img mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" alt="Poster">
+        </div>
     </div>
 </div>
 
-<!-- Shows the movies from the search result -->
 <div class="movieContainer" *ngIf="hasResults">
     <div *ngFor="let movie of returnedMovies">
-        <mat-card class="card">
-            <mat-card-header>
-                <mat-card-title>{{movie.title}}</mat-card-title>
-            </mat-card-header>
-            <img mat-card-image *ngIf="movie.backdrop_path" src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
+        <div class="customCard" routerLink="/details/{{movie.id}}">
+            <h3 class="centered">{{movie.title}}</h3>
+            <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
                 alt="Poster">
-            <img class="notFoundImage" mat-card-image *ngIf="!movie.backdrop_path"
-                src="../../../assets/images/noPoster.png" alt="Not Found">
-            <mat-card-content>
-
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button routerLink="/details/{{movie.id}}">Details</button>
-                <button mat-button>Favorite</button>
-            </mat-card-actions>
-        </mat-card>
+            <img class="notFoundImage" *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png"
+                alt="Poster">
+        </div>
     </div>
 </div>
 

@@ -3,17 +3,33 @@
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
+}
 
-    .card {
-        max-width: 350px;
-        margin: 10px;
+.customCard {
+    text-align: center;
+    position: relative;
+    width: 550px auto;
+    height: 281px;
+    margin: 10px;
+    background-color: grey;
+    transition: .5s;
+
+    img {
+        width: 100%;
     }
 
     .notFoundImage {
-        width: 350px;
-        height: 214px;
+        width: 500px;
+        height: 281px;
     }
 
+    .centered {
+        color: white;
+        position: absolute;
+        width: calc(100% - 20px);
+        background-color: rgba(64, 64, 64, 0.7);
+        padding: 10px;
+    }
 }
 
 .searchBar {
@@ -27,4 +43,16 @@
 
 .noResultsMessage {
     text-align: center;
+}
+
+.card:hover {
+    background-color: rgb(206, 205, 205);
+    opacity: .7;
+    cursor: pointer;
+}
+
+
+.customCard:hover {
+    opacity: .6;
+    cursor: pointer;
 }

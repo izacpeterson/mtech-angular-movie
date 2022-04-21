@@ -1,7 +1,20 @@
-<div>
-    <h1>{{movie.title}}</h1>
-    <h3>{{movie.tagline}}</h3>
-    <img [src]="imageURL+'w780/'+movie.backdrop_path" alt="">
+<div class="main-details" [ngStyle]="{'background-image': getImageUrl('backdrop')}">
+    <div class="left">
+        <img [src]="imageURL + 'w342' + movie.poster_path" alt="">
+    </div>
+    <div class="right">
+        <h1>{{movie.title}}</h1>
+        <div class="subtitle-details">
+            <p>{{movieRating}}</p>
+            <p>{{movie.release_date}}</p>
+            <div class="genres">
+                <span *ngFor="let genre of movie.genres">{{genre.name}}</span>
+            </div>
+            <p>{{movie.runtime}} minutes</p>
+        </div>
+        <h2>{{movie.tagline}}</h2>
+        <p>{{movie.overview}}</p>
 
-    <p>{{movie.overview}}</p>
+    </div>
+
 </div>

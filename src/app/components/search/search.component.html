@@ -11,12 +11,16 @@
 
 <div class="movieContainer" *ngIf="hasResults">
     <div *ngFor="let movie of displayedMovies">
-        <div class="customCard" routerLink="/details/{{movie.id}}">
+        <div class="customCard">
+
             <h3 class="centered">{{movie.title}}</h3>
-            <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
-                alt="Poster">
-            <img class="notFoundImage" *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png"
-                alt="Poster">
+
+            <div class="clickArea" routerLink="/details/{{movie.id}}">
+                <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
+                    alt="Poster">
+                <img class="notFoundImage" *ngIf="!movie.backdrop_path" mat-image
+                    src="../../../assets/images/noPoster.png" alt="Poster">
+            </div>
         </div>
     </div>
 </div>
@@ -27,3 +31,21 @@
         No Movies Found
     </h1>
 </div>
+
+<!-- <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+    </button>
+    <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voice mail</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+    </button>
+</mat-menu> -->

@@ -30,6 +30,10 @@
         background-color: rgba(64, 64, 64, 0.7);
         padding: 10px;
     }
+
+    .clickArea {
+        transition: .5s;
+    }
 }
 
 .searchBar {
@@ -45,14 +49,12 @@
     text-align: center;
 }
 
-.card:hover {
-    background-color: rgb(206, 205, 205);
-    opacity: .7;
-    cursor: pointer;
-}
+// .customCard:hover {
+//     opacity: .6;
+//     cursor: pointer;
+// }
 
-
-.customCard:hover {
+.clickArea:hover {
     opacity: .6;
     cursor: pointer;
 }

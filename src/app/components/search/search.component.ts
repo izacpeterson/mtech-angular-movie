@@ -7,28 +7,27 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  hasSearched: boolean = false;
   hasResults: boolean = true;
-  returnedMovies: any;
-  movies: any;
-  searchInput = '';
+  searchInput: string = '';
+  displayedMovies: any;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     //gets a list of movies when the page loads
     this.apiService.discoverMovies().subscribe((data: any) => {
-      this.movies = data.results;
+      this.displayedMovies = data.results;
     })
   }
 
   getSearch() {
     //filters the search query
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase()
+    //makes API call
     this.apiService.searchMovies(filteredString).subscribe((data: any) => {
       //if there are results assign to returnedMovies
       if (data.total_results > 1) {
-        this.returnedMovies = data.results;
+        this.displayedMovies = data.results;
         this.hasResults = true;
       }
       else {
@@ -36,7 +35,6 @@ export class SearchComponent implements OnInit {
         this.hasResults = false;
       }
     })
-    this.hasSearched = true;
   }
 
 }

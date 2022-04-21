@@ -9,17 +9,8 @@
     <button mat-button (click)="getSearch()">Search</button>
 </div>
 
-<div class="movieContainer" *ngIf="!hasSearched">
-    <div *ngFor="let movie of movies">
-        <div class="customCard" routerLink="/details/{{movie.id}}">
-            <h3 class="centered">{{movie.title}}</h3>
-            <img mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" alt="Poster">
-        </div>
-    </div>
-</div>
-
 <div class="movieContainer" *ngIf="hasResults">
-    <div *ngFor="let movie of returnedMovies">
+    <div *ngFor="let movie of displayedMovies">
         <div class="customCard" routerLink="/details/{{movie.id}}">
             <h3 class="centered">{{movie.title}}</h3>
             <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"

@@ -1,25 +1,24 @@
 .movieContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
 }
+
+$cardWidth: 600px;
+$cardHeight: 350px;
 
 .customCard {
     text-align: center;
     position: relative;
-    width: 550px auto;
-    height: 281px;
+    width: $cardWidth;
+    height: $cardHeight;
     margin: 10px;
     transition: .2s;
 
     img {
         width: 100%;
-    }
-
-    .notFoundImage {
-        width: 500px;
-        height: 281px;
+        height: $cardHeight;
     }
 
     .header {
@@ -28,7 +27,7 @@
         color: white;
         position: absolute;
         width: calc(100% - 20px);
-        background-color: rgba(64, 64, 64, 0.7);
+        background-color: rgba(0, 0, 0, 0.65);
         padding: 10px;
 
         .title {
@@ -48,8 +47,21 @@
     }
 }
 
+.scrollButton {
+    text-align: center;
+    width: 100%;
+    margin: 20px;
+}
+
 .noResultsMessage {
     text-align: center;
+}
+
+.spinner {
+    display: block;
+    position: fixed;
+    right: 48%;
+    top: 30%;
 }
 
 .customCard:hover {

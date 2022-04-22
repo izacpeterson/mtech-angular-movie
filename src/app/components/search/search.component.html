@@ -37,22 +37,23 @@
             <div class="clickArea" routerLink="/details/{{movie.id}}">
                 <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
                     alt="Poster">
-                <img class="notFoundImage" *ngIf="!movie.backdrop_path" mat-image
-                    src="../../../assets/images/noPoster.png" alt="Poster">
+                <img *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png" alt="Poster">
             </div>
         </div>
     </div>
+    <div class="scrollButton">
+        <button mat-raised-button (click)="scrollToTop()">
+            <mat-icon>arrow_upward</mat-icon>
+        </button>
+    </div>
 </div>
 
-<!-- Shows if there is no results -->
 <div *ngIf="!hasResults" class="noResultsMessage">
     <h1>
         No Movies Found
     </h1>
 </div>
 
-<div *ngIf="loading" class="noResultsMessage">
-    <h1>
-        Loading...
-    </h1>
+<div *ngIf="loading" class="spinner">
+    <mat-spinner></mat-spinner>
 </div>

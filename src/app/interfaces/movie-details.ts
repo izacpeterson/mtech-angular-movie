@@ -1,9 +1,11 @@
+import { Genre } from "./genre"
+
 export interface MovieDetails {
     adult?: boolean,
     backdrop_path?: string,
     belongs_to_collection?: { backdrop_path?: string, id?: number, name?: string, poster_path?: string }
     budget?: number,
-    genres?: { id: number, name: string }[],
+    genres?: Genre[],
     homepage?: string,
     id?: number,
     imdb_id?: string,

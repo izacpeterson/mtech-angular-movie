@@ -11,8 +11,7 @@
     width: 550px auto;
     height: 281px;
     margin: 10px;
-    background-color: grey;
-    transition: .5s;
+    transition: .2s;
 
     img {
         width: 100%;
@@ -23,17 +22,21 @@
         height: 281px;
     }
 
-    .centered {
+    .header {
+        display: flex;
+        justify-content: space-between;
         color: white;
         position: absolute;
         width: calc(100% - 20px);
         background-color: rgba(64, 64, 64, 0.7);
         padding: 10px;
+
+        .title {
+            align-self: center;
+            font-size: 18px;
+        }
     }
 
-    .clickArea {
-        transition: .5s;
-    }
 }
 
 .searchBar {
@@ -49,12 +52,7 @@
     text-align: center;
 }
 
-// .customCard:hover {
-//     opacity: .6;
-//     cursor: pointer;
-// }
-
-.clickArea:hover {
-    opacity: .6;
+.customCard:hover {
+    opacity: .8;
     cursor: pointer;
 }

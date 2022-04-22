@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class SearchComponent implements OnInit {
   hasResults: boolean = true;
+  loading: boolean = false;
   searchInput: string = '';
   displayedMovies: any;
 
@@ -21,6 +22,7 @@ export class SearchComponent implements OnInit {
   }
 
   getSearch() {
+    this.loading = true;
     //filters the search query
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase()
     //makes API call
@@ -29,10 +31,12 @@ export class SearchComponent implements OnInit {
       if (data.total_results > 1) {
         this.displayedMovies = data.results;
         this.hasResults = true;
+        this.loading = false;
       }
       else {
         //if there are no results will display a message
         this.hasResults = false;
+        this.loading = false;
       }
     })
   }

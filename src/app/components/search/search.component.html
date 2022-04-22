@@ -1,5 +1,5 @@
 <div class="searchBar">
-    <mat-form-field class="formField" appearance="fill">
+    <mat-form-field class="formField">
         <mat-label>Search Movies</mat-label>
         <input matInput type="text" [(ngModel)]="searchInput" (keydown.enter)="getSearch()">
         <button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput=''">
@@ -9,11 +9,30 @@
     <button mat-button (click)="getSearch()">Search</button>
 </div>
 
-<div class="movieContainer" *ngIf="hasResults">
+<div class="movieContainer" *ngIf="!loading && hasResults">
     <div *ngFor="let movie of displayedMovies">
         <div class="customCard">
 
-            <h3 class="centered">{{movie.title}}</h3>
+            <div class="header">
+                <div class="title">{{movie.title}}</div>
+                <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>favorite</mat-icon>
+                        <span>Add to Favorites</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>watch_later</mat-icon>
+                        <span>Add to Watch List</span>
+                    </button>
+                    <button mat-menu-item routerLink="/details/{{movie.id}}">
+                        <mat-icon>info</mat-icon>
+                        <span>View Details</span>
+                    </button>
+                </mat-menu>
+            </div>
 
             <div class="clickArea" routerLink="/details/{{movie.id}}">
                 <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}"
@@ -32,20 +51,8 @@
     </h1>
 </div>
 
-<!-- <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
-    </button>
-    <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voice mail</span>
-    </button>
-    <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-    </button>
-</mat-menu> -->
+<div *ngIf="loading" class="noResultsMessage">
+    <h1>
+        Loading...
+    </h1>
+</div>

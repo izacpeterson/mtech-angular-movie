@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getUser.subscribe((uid) => {
-      console.log(uid);
+    this.userService.getUserEmail.subscribe((email) => {
+      console.log(email);
     });
   }
 

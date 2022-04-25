@@ -67,3 +67,16 @@ drag-scroll {
     height: auto;
     width: 100%;
 }
+
+.production-header {
+    margin-bottom: 0;
+}
+
+.production-companies {
+    display: flex;
+
+    .company {
+        margin-right: 1rem;
+    }
+
+}

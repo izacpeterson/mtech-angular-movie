@@ -1,12 +1,12 @@
-<div class="main-details" [ngStyle]="{'background-image': getImageUrl('backdrop')}">
-    <div class="left">
+<div class="main-details" [ngStyle]="{'background-image': getImageUrl()}">
+    <div class="left" *ngIf="!XSmallScreen">
         <img [src]="imageURL + 'w342' + movie.poster_path" alt="">
     </div>
     <div class="right">
         <h1>{{movie.title}}</h1>
         <div class="subtitle-details">
             <p>{{movieRating}}</p>
-            <p>{{movie.release_date}}</p>
+            <p>{{movie.release_date | date }}</p>
             <div class="genres">
                 <span *ngFor="let genre of movie.genres">{{genre.name}}</span>
             </div>
@@ -14,7 +14,13 @@
         </div>
         <h2>{{movie.tagline}}</h2>
         <p>{{movie.overview}}</p>
-
+        <h3 class="production-header">Produced By</h3>
+        <div class="production-companies">
+            <div class="company" *ngFor="let company of movie.production_companies">
+                <!-- <img *ngIf="company.logo_path" [src]="imageURL + 'w45' + company.logo_path" alt=""> -->
+                <p>{{company.name}}</p>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -33,5 +39,4 @@
             </section>
         </drag-scroll>
     </div>
-
 </div>

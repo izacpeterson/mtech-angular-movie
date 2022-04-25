@@ -13,6 +13,7 @@ import { SearchComponent } from './components/search/search.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    DragScrollModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

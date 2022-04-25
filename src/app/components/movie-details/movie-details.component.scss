@@ -47,6 +47,27 @@
     }
 }
 
+.castContainer {
+    margin: 10px 0 10px 0;
+
+    .castTitle {
+        text-align: center;
+    }
+
+    .castInfo {
+        display: flex;
+    }
+}
+
+.card {
+    margin: 0 10px 0 10px;
+}
+
+drag-scroll {
+    height: auto;
+    width: 100%;
+}
+
 .production-header {
     margin-bottom: 0;
 }
@@ -57,4 +78,5 @@
     .company {
         margin-right: 1rem;
     }
+
 }

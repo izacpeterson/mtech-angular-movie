@@ -22,4 +22,21 @@
             </div>
         </div>
     </div>
+
+</div>
+
+<div class="castContainer">
+    <h1 class="castTitle">Cast:</h1>
+    <div class="castInfo">
+        <drag-scroll>
+            <section drag-scroll-item *ngFor="let person of cast">
+                <div class="card">
+                    <div>
+                        <img mat-card-img src="https://image.tmdb.org/t/p/w185{{person.profile_path}}" alt="">
+                    </div>
+                    <h2 class="castName">{{person.name}}</h2>
+                </div>
+            </section>
+        </drag-scroll>
+    </div>
 </div>

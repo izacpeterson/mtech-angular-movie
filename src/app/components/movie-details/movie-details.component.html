@@ -21,6 +21,20 @@
                 <p>{{company.name}}</p>
             </div>
         </div>
+        <div class="crew-div">
+            <div>
+                <h3>Directed By</h3>
+                <div class="crew">
+                    <p *ngFor="let director of directors">{{director.name}}</p>
+                </div>
+            </div>
+            <div *ngIf="writers">
+                <h3>Written By</h3>
+                <div class="crew">
+                    <p *ngFor="let writer of writers">{{writer.name}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

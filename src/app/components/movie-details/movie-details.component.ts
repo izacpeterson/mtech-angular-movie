@@ -1,7 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, map, switchMap, tap } from 'rxjs';
+import { concatMap, map, retryWhen, switchMap, tap } from 'rxjs';
+import { CastMember } from 'src/app/interfaces/cast-member';
+import { CrewMember } from 'src/app/interfaces/crew-member';
 import { MovieDetails } from 'src/app/interfaces/movie-details';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -15,7 +17,9 @@ export class MovieDetailsComponent implements OnInit {
   movie: MovieDetails = {};
   imageURL: string = `https://image.tmdb.org/t/p/`;
   movieRating: string = '';
-  cast: any;
+  cast: CastMember[] = [];
+  writers: CrewMember[] = [];
+  directors: CrewMember[] = [];
   currentScreenSize: string = '';
   XSmallScreen: boolean = false
 
@@ -80,7 +84,18 @@ export class MovieDetailsComponent implements OnInit {
     this.apiService.getExtendedMovieDetails(this.movieId, 'credits').pipe(
       map((res: any) => {
         this.cast = res.cast;
-        console.log('CAST', this.cast);
+        // console.log('TEST', this.cast);
+        // this.crew = res.crew;
+        res.crew.forEach((crewMember: any) => {
+          if (crewMember.job === 'Director') {
+            this.directors.push(crewMember)
+          } else if (crewMember.job === 'Writer') {
+            this.writers.push(crewMember)
+          }
+        })
+        // console.log('crew', res.crew);
+        console.log('directors', this.directors);
+        console.log('writers', this.writers);
       })
     ).subscribe()
 

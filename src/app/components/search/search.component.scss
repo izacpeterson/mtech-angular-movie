@@ -5,20 +5,20 @@
     flex-wrap: wrap;
 }
 
-$cardWidth: 600px;
-$cardHeight: 350px;
+// $cardWidth: 600px;
+// $cardHeight: 350px;
 
 .customCard {
     text-align: center;
     position: relative;
-    width: $cardWidth;
-    height: $cardHeight;
+    // width: $cardWidth;
+    // height: $cardHeight;
     margin: 10px;
     transition: .2s;
 
     img {
         width: 100%;
-        height: $cardHeight;
+        // height: $cardHeight;
     }
 
     .header {

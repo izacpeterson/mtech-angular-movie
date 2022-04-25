@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +11,17 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.getUser.subscribe((uid) => {
+      console.log(uid);
+    });
+  }
+
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
+
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
@@ -46,8 +56,4 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

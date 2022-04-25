@@ -1,12 +1,39 @@
 .movieContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
+}
 
-    .card {
-        max-width: 350px;
-        margin: 10px;
+$cardWidth: 600px;
+$cardHeight: 350px;
+
+.customCard {
+    text-align: center;
+    position: relative;
+    width: $cardWidth;
+    height: $cardHeight;
+    margin: 10px;
+    transition: .2s;
+
+    img {
+        width: 100%;
+        height: $cardHeight;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        position: absolute;
+        width: calc(100% - 20px);
+        background-color: rgba(0, 0, 0, 0.65);
+        padding: 10px;
+
+        .title {
+            align-self: center;
+            font-size: 18px;
+        }
     }
 
 }
@@ -18,4 +45,26 @@
     .formField {
         width: 500px;
     }
+}
+
+.scrollButton {
+    text-align: center;
+    width: 100%;
+    margin: 20px;
+}
+
+.noResultsMessage {
+    text-align: center;
+}
+
+.spinner {
+    display: block;
+    position: fixed;
+    right: 48%;
+    top: 30%;
+}
+
+.customCard:hover {
+    opacity: .8;
+    cursor: pointer;
 }

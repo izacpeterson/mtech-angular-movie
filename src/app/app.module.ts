@@ -24,7 +24,6 @@ import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
     MovieDetailsComponent,
     FavoritesComponent,
     NotFoundComponent,
-    FirebaseTestComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +34,6 @@ import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

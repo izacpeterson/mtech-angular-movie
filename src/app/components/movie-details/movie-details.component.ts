@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, map, switchMap, tap } from 'rxjs';
@@ -14,11 +15,45 @@ export class MovieDetailsComponent implements OnInit {
   movie: MovieDetails = {};
   imageURL: string = `https://image.tmdb.org/t/p/`;
   movieRating: string = '';
+  currentScreenSize: string = '';
+  XSmallScreen: boolean = false
+
+  displayNameMap = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ]);
+
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService
-  ) { }
+    private apiService: ApiService,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe()
+      .subscribe(result => {
+        for (const query of Object.keys(result.breakpoints)) {
+          if (result.breakpoints[query]) {
+            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+          }
+        }
+        if (this.currentScreenSize === 'XSmall') {
+          this.XSmallScreen = true
+        } else {
+          this.XSmallScreen = false
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.route.params.pipe(
@@ -42,11 +77,11 @@ export class MovieDetailsComponent implements OnInit {
       })
     ).subscribe()
   }
-  getImageUrl(imageType: 'backdrop' | 'poster') {
-    if (imageType === 'backdrop') {
+  getImageUrl() {
+    if (this.XSmallScreen === false) {
       return `url('${this.imageURL}w780/${this.movie.backdrop_path}`
     } else {
-      return `url('${this.imageURL}w780/${this.movie.poster_path}`
+      return `url('${this.imageURL}w342/${this.movie.poster_path}`
     }
   }
 }

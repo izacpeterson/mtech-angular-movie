@@ -47,6 +47,28 @@
     }
 }
 
+.crew-div {
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+        margin-right: 2rem;
+
+        h3 {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.crew {
+    display: flex;
+    flex-wrap: wrap;
+
+    p {
+        margin-right: .75rem;
+    }
+}
+
 .castContainer {
     margin: 10px 0 10px 0;
 

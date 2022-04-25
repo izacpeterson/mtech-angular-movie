@@ -6,6 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+
 
 @NgModule({
   declarations: [],
@@ -16,7 +20,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    LayoutModule
+    LayoutModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     CommonModule,
@@ -25,7 +31,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    LayoutModule
+    LayoutModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule { }

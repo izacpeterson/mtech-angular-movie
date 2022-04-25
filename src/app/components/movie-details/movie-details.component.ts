@@ -80,7 +80,7 @@ export class MovieDetailsComponent implements OnInit {
     this.apiService.getExtendedMovieDetails(this.movieId, 'credits').pipe(
       map((res: any) => {
         this.cast = res.cast;
-        console.log('TEST', this.cast);
+        console.log('CAST', this.cast);
       })
     ).subscribe()
 

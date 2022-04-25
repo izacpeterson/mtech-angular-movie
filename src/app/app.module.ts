@@ -14,6 +14,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
 
 @NgModule({
   declarations: [

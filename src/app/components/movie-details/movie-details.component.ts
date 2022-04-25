@@ -96,8 +96,6 @@ export class MovieDetailsComponent implements OnInit {
         // console.log('crew', res.crew);
         console.log('directors', this.directors);
         console.log('writers', this.writers);
-
-
       })
     ).subscribe()
 

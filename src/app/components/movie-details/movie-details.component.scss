@@ -70,7 +70,6 @@
 }
 
 .castContainer {
-    margin: 10px 0 10px 0;
 
     .castTitle {
         text-align: center;
@@ -80,11 +79,34 @@
         display: flex;
         flex-wrap: nowrap;
         overflow-x: auto;
+        align-items: baseline;
     }
 }
 
 .card {
     margin: 0 10px 0 10px;
+
+    .castName {
+        font-size: 20px;
+    }
+
+    .castChar {
+        margin-top: 10px;
+        font-size: 15px;
+    }
+
+    img {
+        width: 150px;
+    }
+
+    .imgContainer {
+        overflow: hidden;
+
+        .noPhoto {
+            margin: 0px 0px 40px 0px;
+        }
+    }
+
 }
 
 drag-scroll {

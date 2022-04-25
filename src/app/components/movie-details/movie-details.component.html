@@ -44,10 +44,19 @@
     <div class="castInfo">
         <section *ngFor="let person of cast">
             <div class="card">
-                <div>
-                    <img mat-card-img src="https://image.tmdb.org/t/p/w185{{person.profile_path}}" alt="">
+                <div class="imgContainer">
+                    <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w185{{person.profile_path}}"
+                        alt="">
+                    <img class="noPhoto" *ngIf="!person.profile_path" src="../../../assets/images/noCastPhoto.png"
+                        alt="">
+
+                    <!-- {{person.profile_path !== null ?
+                    '<img src="https://image.tmdb.org/t/p/w185{{person.profile_path}}" alt="">'
+                    : '<img src="../../../assets/images/noCastPhoto.png" alt="">'}} -->
+
                 </div>
-                <h2 class="castName">{{person.name}}</h2>
+                <div class="castName">{{person.name}}</div>
+                <div class="castChar">{{person.character}}</div>
             </div>
         </section>
     </div>

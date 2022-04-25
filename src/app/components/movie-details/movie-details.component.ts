@@ -14,6 +14,7 @@ export class MovieDetailsComponent implements OnInit {
   movie: MovieDetails = {};
   imageURL: string = `https://image.tmdb.org/t/p/`;
   movieRating: string = '';
+  cast: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +42,14 @@ export class MovieDetailsComponent implements OnInit {
         // console.log('rating', this.movieRating);
       })
     ).subscribe()
+
+    this.apiService.getExtendedMovieDetails(this.movieId, 'credits').pipe(
+      map((res: any) => {
+        this.cast = res.cast;
+        console.log('TEST', this.cast);
+      })
+    ).subscribe()
+
   }
   getImageUrl(imageType: 'backdrop' | 'poster') {
     if (imageType === 'backdrop') {

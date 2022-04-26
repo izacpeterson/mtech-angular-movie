@@ -1,15 +1,13 @@
 <mat-toolbar class="toolbar">
-    <button mat-button routerLink="/">
-        <h1>WebFlix</h1>
-    </button>
-    <button mat-button routerLink="/favorites">
-        Favorites
-    </button>
-    <button mat-button routerLink="/search">
-        Search
-    </button>
-    <span class="spacer"></span>
-    <button mat-icon-button routerLink="/login">
-        <mat-icon>person</mat-icon>
-    </button>
+  <button mat-button routerLink="/">
+    <h1>WebFlix</h1>
+  </button>
+  <button mat-button routerLink="/favorites">Favorites</button>
+  <button mat-button routerLink="/search">Search</button>
+  <span class="spacer"></span>
+  <span>{{ navName }}</span>
+
+  <button mat-icon-button routerLink="/login">
+    <mat-icon>person</mat-icon>
+  </button>
 </mat-toolbar>

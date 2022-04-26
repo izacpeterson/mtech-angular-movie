@@ -4,6 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,44 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  googleLogin: boolean = true;
+  currentScreenSize: string = '';
+  XSmallScreen: boolean = false
+
+  displayNameMap = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ]);
+
+  constructor(
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe()
+      .subscribe(result => {
+        for (const query of Object.keys(result.breakpoints)) {
+          if (result.breakpoints[query]) {
+            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+          }
+        }
+        if (this.currentScreenSize === 'XSmall') {
+          this.XSmallScreen = true
+        } else {
+          this.XSmallScreen = false
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.userService.getUserEmail.subscribe((email) => {
@@ -56,4 +94,11 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
+  setGoogleLogin() {
+    this.googleLogin = true
+  }
+  setEmailLogin() {
+    this.googleLogin = false
+  }
+
 }

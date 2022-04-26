@@ -8,7 +8,7 @@ import { Observable, of, Subscriber } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  constructor() {}
+  constructor() { }
 
   app = initializeApp(environment.firebaseConfig);
   auth = getAuth(this.app);
@@ -20,6 +20,8 @@ export class UserService {
         console.log(user);
         uid = user.uid;
         subscriber.next(uid);
+        console.log(uid);
+
       } else {
         // User is signed out
         subscriber.next('NO USER');

@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, map, retryWhen, switchMap, tap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { CastMember } from 'src/app/interfaces/cast-member';
 import { CrewMember } from 'src/app/interfaces/crew-member';
 import { MovieDetails } from 'src/app/interfaces/movie-details';

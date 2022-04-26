@@ -35,10 +35,10 @@
             </div>
 
             <div class="clickArea" routerLink="/details/{{movie.id}}">
-                <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w300{{movie.backdrop_path}}"
+                <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}"
                     alt="Poster">
                 <img *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png" alt="Poster"
-                    [ngStyle]="{'width': '300px', 'height': '170px'}">
+                    [ngStyle]="{'width': '185px', 'height': '279px'}">
             </div>
         </div>
     </div>

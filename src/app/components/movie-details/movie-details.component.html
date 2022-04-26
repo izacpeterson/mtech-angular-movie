@@ -61,3 +61,16 @@
         </section>
     </div>
 </div>
+
+<div class="trailerContainer">
+    <h1>Official Trailer:</h1>
+    <div *ngFor="let movie of officialTrailers">
+        <iframe width="560" height="315" [src]="movie" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div *ngIf="officialTrailers.length == 0">
+        <h2>No Official Trailers</h2>
+    </div>
+</div>

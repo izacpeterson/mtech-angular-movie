@@ -6,6 +6,7 @@ import { CastMember } from 'src/app/interfaces/cast-member';
 import { CrewMember } from 'src/app/interfaces/crew-member';
 import { MovieDetails } from 'src/app/interfaces/movie-details';
 import { ApiService } from 'src/app/services/api.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-movie-details',
@@ -21,7 +22,10 @@ export class MovieDetailsComponent implements OnInit {
   writers: CrewMember[] = [];
   directors: CrewMember[] = [];
   currentScreenSize: string = '';
-  XSmallScreen: boolean = false
+  XSmallScreen: boolean = false;
+  videos: any;
+  officialTrailers: any = [];
+  trailerTitles: any = ['Official Trailer', 'Official IMAX® Trailer', 'Trailer (Official)', 'Theatrical Trailer', 'Main Trailer'];
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -34,7 +38,8 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private sanitizer: DomSanitizer,
   ) {
     breakpointObserver
       .observe([
@@ -99,7 +104,19 @@ export class MovieDetailsComponent implements OnInit {
       })
     ).subscribe()
 
+    this.apiService.getExtendedMovieDetails(this.movieId, 'videos').pipe(
+      map((res: any) => {
+        this.videos = res.results;
+        //console.log('VIDEOS', this.videos);
+        this.videos.forEach((video: any) => {
+          if (this.trailerTitles.some((str: any) => video.name.includes(str))) { //video.name.includes('Official Trailer')
+            this.officialTrailers.push(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${video.key}`));
+          }
+        })
+      })
+    ).subscribe();
   }
+
   getImageUrl() {
     if (this.XSmallScreen === false) {
       return `url('${this.imageURL}w780/${this.movie.backdrop_path}`

@@ -109,11 +109,6 @@
 
 }
 
-drag-scroll {
-    height: auto;
-    width: 100%;
-}
-
 .production-header {
     margin-bottom: 0;
 }
@@ -125,4 +120,9 @@ drag-scroll {
         margin-right: 1rem;
     }
 
+}
+
+.trailerContainer {
+    text-align: center;
+    margin: 20px 0 20px 0;
 }

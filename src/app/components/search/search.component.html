@@ -42,8 +42,8 @@
             </div>
         </div>
     </div>
-    <div class="scrollButton">
-        <button mat-raised-button (click)="scrollToTop()">
+    <div class="scrollButton" *ngIf="showScrollBtn" [@inOutAnimation]>
+        <button mat-fab (click)="scrollToTop()">
             <mat-icon>arrow_upward</mat-icon>
         </button>
     </div>

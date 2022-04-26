@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ViewportScroller } from '@angular/common';
+import { map, take } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,8 @@ export class SearchComponent implements OnInit {
   hasResults: boolean = true;
   loading: boolean = false;
   searchInput: string = '';
-  displayedMovies: any;
+  displayedMovies: any = [];
+  pageCount: number = 1;
 
   constructor(
     private apiService: ApiService,
@@ -21,10 +23,22 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     //gets a list of movies when the page loads
     this.loading = true;
-    this.apiService.discoverMovies().subscribe((data: any) => {
-      this.displayedMovies = data.results;
-    })
+    this.apiService.discoverMovies(this.pageCount++).pipe(
+      map((res: any) => {
+        res.results.forEach((movie: any) => {
+          this.displayedMovies.push(movie)
+        })
+        console.log('movie info', this.displayedMovies);
+      })
+    ).subscribe()
     this.loading = false;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  getScrollHeight() {
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+      this.getMoreMovies()
+    }
   }
 
   getSearch() {
@@ -49,6 +63,17 @@ export class SearchComponent implements OnInit {
 
   scrollToTop() {
     this.scroll.scrollToPosition([0, 0]);
+  }
+
+  getMoreMovies() {
+    this.apiService.discoverMovies(this.pageCount++).pipe(take(1),
+      map((res: any) => {
+        res.results.forEach((movie: any) => {
+          this.displayedMovies.push(movie)
+        })
+        console.log('movie info', this.displayedMovies);
+      })
+    ).subscribe()
   }
 
 }

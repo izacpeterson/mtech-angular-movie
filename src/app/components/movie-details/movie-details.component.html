@@ -2,7 +2,7 @@
     <div class="left" *ngIf="!XSmallScreen">
         <img [src]="imageURL + 'w342' + movie.poster_path" alt="">
     </div>
-    <div class="right">
+    <div [ngClass]="XSmallScreen ? 'xsmall-right': 'right'">
         <h1>{{movie.title}}</h1>
         <div class="subtitle-details">
             <p>{{movieRating}}</p>
@@ -45,8 +45,7 @@
         <section *ngFor="let person of cast">
             <div class="card">
                 <div class="imgContainer">
-                    <img *ngIf="person.profile_path" src="https://image.tmdb.org/t/p/w185{{person.profile_path}}"
-                        alt="">
+                    <img *ngIf="person.profile_path" [src]="imageURL + 'w185' + person.profile_path" alt="">
                     <img class="noPhoto" *ngIf="!person.profile_path" src="../../../assets/images/noCastPhoto.png"
                         alt="">
 

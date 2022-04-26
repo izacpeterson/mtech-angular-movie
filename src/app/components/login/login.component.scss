@@ -1,0 +1,56 @@
+@import '../../../styles.scss';
+
+.login {
+    width: 50%;
+    margin: 7rem auto;
+    text-align: center;
+}
+
+.xsmall-login {
+    width: 80%;
+    margin: 7rem auto;
+    text-align: center;
+}
+
+.login-type-div {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.login-type-btn {
+    border: none;
+    background: none;
+    color: $primary;
+    font-size: .9rem;
+}
+
+.login-type-btn:hover {
+    cursor: pointer;
+}
+
+.google,
+.email {
+    border-left: 2px solid $primary;
+    border-right: 2px solid $primary;
+    border-radius: 20px;
+    height: 12rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+        background-color: $primary;
+        color: white
+    }
+}
+
+.email {
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

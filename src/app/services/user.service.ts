@@ -20,11 +20,12 @@ export class UserService {
         console.log(user);
         uid = user.uid;
         subscriber.next(uid);
-        console.log(uid);
-
+        // console.log(uid);
+        localStorage.setItem('loggedIn', 'true')
       } else {
         // User is signed out
         subscriber.next('NO USER');
+        localStorage.setItem('loggedIn', 'false')
       }
     });
   });
@@ -48,4 +49,8 @@ export class UserService {
       }
     });
   });
+  get isLoggedIn(): boolean {
+    const loggedIn = JSON.parse(localStorage.getItem('loggedIn')!);
+    return loggedIn
+  }
 }

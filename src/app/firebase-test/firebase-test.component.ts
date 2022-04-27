@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 
 @Component({
   selector: 'app-firebase-test',

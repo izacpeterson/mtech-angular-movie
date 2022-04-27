@@ -3,34 +3,34 @@ import { ApiService } from 'src/app/services/api.service';
 import { ViewportScroller } from '@angular/common';
 import { map, take } from 'rxjs';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { UserService } from 'src/app/services/user.service';
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+} from 'firebase/firestore';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate('.2s ease-out',
-              style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave',
-          [
-            style({ opacity: 1 }),
-            animate('.2s ease-in',
-              style({ opacity: 0 }))
-          ]
-        )
-      ]
-    )
-  ]
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('.2s ease-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('.2s ease-in', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class SearchComponent implements OnInit {
   hasResults: boolean = true;
@@ -41,35 +41,47 @@ export class SearchComponent implements OnInit {
   searchPageCount: number = 1;
   showScrollBtn: boolean = false;
   hasSearched: boolean = false;
+  // Initialize Firebase
+  app = initializeApp(environment.firebaseConfig);
+
+  // Initialize Cloud Firestore and get a reference to the service
+  db = getFirestore(this.app);
 
   constructor(
     private apiService: ApiService,
-    private scroll: ViewportScroller
-  ) { }
+    private scroll: ViewportScroller,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     //gets a list of movies when the page loads
     this.loading = true;
-    this.apiService.discoverMovies(this.trendingPageCount++).pipe(take(2),
-      map((res: any) => {
-        res.results.forEach((movie: any) => {
-          this.displayedMovies.push(movie);
+    this.apiService
+      .discoverMovies(this.trendingPageCount++)
+      .pipe(
+        take(2),
+        map((res: any) => {
+          res.results.forEach((movie: any) => {
+            this.displayedMovies.push(movie);
+          });
         })
-      })
-    ).subscribe()
+      )
+      .subscribe();
     this.getMoreMovies();
     this.loading = false;
   }
 
   @HostListener('window:scroll', ['$event'])
   getScrollHeight() {
-    if ((window.innerHeight + window.scrollY + 300) >= document.body.scrollHeight) {
+    if (
+      window.innerHeight + window.scrollY + 300 >=
+      document.body.scrollHeight
+    ) {
       !this.hasSearched ? this.getMoreMovies() : this.getMoreSearches();
     }
     if (window.scrollY > 100) {
       this.showScrollBtn = true;
-    }
-    else {
+    } else {
       this.showScrollBtn = false;
     }
   }
@@ -81,13 +93,17 @@ export class SearchComponent implements OnInit {
     this.searchPageCount = 1;
 
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase();
-    this.apiService.searchMovies(filteredString, this.searchPageCount++).pipe(take(1),
-      map((res: any) => {
-        res.results.forEach((movie: any) => {
-          this.displayedMovies.push(movie);
+    this.apiService
+      .searchMovies(filteredString, this.searchPageCount++)
+      .pipe(
+        take(1),
+        map((res: any) => {
+          res.results.forEach((movie: any) => {
+            this.displayedMovies.push(movie);
+          });
         })
-      })
-    ).subscribe()
+      )
+      .subscribe();
     this.getMoreSearches();
     this.loading = false;
   }
@@ -97,23 +113,41 @@ export class SearchComponent implements OnInit {
   }
 
   getMoreMovies() {
-    this.apiService.discoverMovies(this.trendingPageCount++).pipe(take(1),
-      map((res: any) => {
-        res.results.forEach((movie: any) => {
-          this.displayedMovies.push(movie);
+    this.apiService
+      .discoverMovies(this.trendingPageCount++)
+      .pipe(
+        take(1),
+        map((res: any) => {
+          res.results.forEach((movie: any) => {
+            this.displayedMovies.push(movie);
+          });
         })
-      })
-    ).subscribe()
+      )
+      .subscribe();
   }
 
   getMoreSearches() {
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase();
-    this.apiService.searchMovies(filteredString, this.searchPageCount++).pipe(take(1),
-      map((res: any) => {
-        res.results.forEach((movie: any) => {
-          this.displayedMovies.push(movie);
+    this.apiService
+      .searchMovies(filteredString, this.searchPageCount++)
+      .pipe(
+        take(1),
+        map((res: any) => {
+          res.results.forEach((movie: any) => {
+            this.displayedMovies.push(movie);
+          });
         })
-      })
-    ).subscribe()
+      )
+      .subscribe();
+  }
+
+  favorite() {
+    this.userService.getUID.subscribe((uid) => {
+      console.log(uid);
+      let docRef = doc(this.db, 'favorites', uid);
+      setDoc(docRef, {
+        likes: arrayUnion('testID'),
+      });
+    });
   }
 }

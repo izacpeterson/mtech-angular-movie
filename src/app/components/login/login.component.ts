@@ -5,6 +5,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
   ) {
     breakpointObserver
       .observe([
@@ -81,6 +83,9 @@ export class LoginComponent implements OnInit {
         // The signed-in user info.
         const user = result.user;
         console.log(result.user);
+        localStorage.setItem('loggedIn', 'true')
+
+        this.router.navigate(['search'])
         // ...
       })
       .catch((error) => {

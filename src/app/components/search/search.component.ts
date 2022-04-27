@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ViewportScroller } from '@angular/common';
 import { map, take } from 'rxjs';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-search',
@@ -37,8 +37,10 @@ export class SearchComponent implements OnInit {
   loading: boolean = false;
   searchInput: string = '';
   displayedMovies: any = [];
-  pageCount: number = 1;
+  trendingPageCount: number = 1;
+  searchPageCount: number = 1;
   showScrollBtn: boolean = false;
+  hasSearched: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -48,48 +50,46 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     //gets a list of movies when the page loads
     this.loading = true;
-    this.apiService.discoverMovies(this.pageCount++).pipe(
+    this.apiService.discoverMovies(this.trendingPageCount++).pipe(take(2),
       map((res: any) => {
         res.results.forEach((movie: any) => {
           this.displayedMovies.push(movie);
         })
       })
     ).subscribe()
+    this.getMoreMovies();
     this.loading = false;
   }
 
   @HostListener('window:scroll', ['$event'])
   getScrollHeight() {
     if ((window.innerHeight + window.scrollY + 250) >= document.body.scrollHeight) {
-      this.getMoreMovies();
+      !this.hasSearched ? this.getMoreMovies() : this.getMoreSearches();
     }
     if (window.scrollY > 100) {
-      this.showScrollBtn = true
+      this.showScrollBtn = true;
     }
     else {
-      this.showScrollBtn = false
+      this.showScrollBtn = false;
     }
-
   }
 
   getSearch() {
+    this.displayedMovies = [];
+    this.hasSearched = true;
     this.loading = true;
-    //filters the search query
+    this.searchPageCount = 1;
+
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase();
-    //makes API call
-    this.apiService.searchMovies(filteredString).subscribe((data: any) => {
-      //if there are results assign to returnedMovies
-      if (data.total_results > 1) {
-        this.displayedMovies = data.results;
-        this.hasResults = true;
-        this.loading = false;
-      }
-      else {
-        //if there are no results will display a message
-        this.hasResults = false;
-        this.loading = false;
-      }
-    })
+    this.apiService.searchMovies(filteredString, this.searchPageCount++).pipe(take(1),
+      map((res: any) => {
+        res.results.forEach((movie: any) => {
+          this.displayedMovies.push(movie);
+        })
+      })
+    ).subscribe()
+    this.getMoreSearches();
+    this.loading = false;
   }
 
   scrollToTop() {
@@ -97,7 +97,7 @@ export class SearchComponent implements OnInit {
   }
 
   getMoreMovies() {
-    this.apiService.discoverMovies(this.pageCount++).pipe(take(1),
+    this.apiService.discoverMovies(this.trendingPageCount++).pipe(take(1),
       map((res: any) => {
         res.results.forEach((movie: any) => {
           this.displayedMovies.push(movie);
@@ -106,4 +106,14 @@ export class SearchComponent implements OnInit {
     ).subscribe()
   }
 
+  getMoreSearches() {
+    let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase();
+    this.apiService.searchMovies(filteredString, this.searchPageCount++).pipe(take(1),
+      map((res: any) => {
+        res.results.forEach((movie: any) => {
+          this.displayedMovies.push(movie);
+        })
+      })
+    ).subscribe()
+  }
 }

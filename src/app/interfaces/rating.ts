@@ -1,5 +1,7 @@
+import { User } from './user';
+
 export interface Rating {
 	id: number,
-	userID: number,
+	userID: User['id'],
 	value: number
 }

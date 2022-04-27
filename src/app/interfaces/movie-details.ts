@@ -1,6 +1,6 @@
-import { Genre } from "./genre";
-import { Comment } from "./comment";
-import { Rating } from "./rating";
+import { Genre } from './genre';
+import { Comment } from './comment';
+import { Rating } from './rating';
 
 export interface MovieDetails {
     id?: number,        // consider making id a required property

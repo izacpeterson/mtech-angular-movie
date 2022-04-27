@@ -51,4 +51,7 @@ export class NavbarComponent implements OnInit {
       this.navName = name;
     });
   }
+  logOutUser() {
+    this.userService.logOutUser()
+  }
 }

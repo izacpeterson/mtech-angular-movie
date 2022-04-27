@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { Observable, of, Subscriber } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   app = initializeApp(environment.firebaseConfig);
   auth = getAuth(this.app);
@@ -52,5 +55,14 @@ export class UserService {
   get isLoggedIn(): boolean {
     const loggedIn = JSON.parse(localStorage.getItem('loggedIn')!);
     return loggedIn
+  }
+  logOutUser() {
+    signOut(this.auth).then(() => {
+      // Sign-out successful.
+      localStorage.setItem('loggedIn', 'false')
+      this.router.navigate(['login'])
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 }

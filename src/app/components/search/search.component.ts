@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   getScrollHeight() {
-    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+    if ((window.innerHeight + window.scrollY + 250) >= document.body.scrollHeight) {
       this.getMoreMovies();
     }
     if (window.scrollY > 100) {

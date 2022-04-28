@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { ViewportScroller } from '@angular/common';
 import { map, take } from 'rxjs';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { FirebaseApiService } from 'src/app/services/firebase-api.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-search',
@@ -42,9 +44,12 @@ export class SearchComponent implements OnInit {
   showScrollBtn: boolean = false;
   hasSearched: boolean = false;
 
+
   constructor(
     private apiService: ApiService,
-    private scroll: ViewportScroller
+    private scroll: ViewportScroller,
+    private firebaseService: FirebaseApiService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -116,5 +121,13 @@ export class SearchComponent implements OnInit {
         })
       })
     ).subscribe()
+  }
+
+  addToWatchList(movieId: number) {
+    this.userService.getUID.subscribe((user: any) => {
+      console.log('inside function', user);
+      this.firebaseService.addToWatchList(movieId, user)
+    })
+
   }
 }

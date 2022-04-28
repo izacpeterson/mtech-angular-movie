@@ -23,7 +23,7 @@
                         <mat-icon>favorite</mat-icon>
                         <span>Add to Favorites</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="addToWatchList(movie.id)">
                         <mat-icon>watch_later</mat-icon>
                         <span>Add to Watch List</span>
                     </button>

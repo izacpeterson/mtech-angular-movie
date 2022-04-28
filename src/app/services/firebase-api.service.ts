@@ -89,6 +89,9 @@ export class FirebaseApiService {
     return querySnapshot.docs[0].data();
   }
 
+  calculateAverageRating(movieId: number) {
+
+  }
 
   //
   // write queries
@@ -106,7 +109,16 @@ export class FirebaseApiService {
     })
   }
 
-  calculateAverageRating(movieId: number) {
+
+  async setPublicRating(movieId: string, rating: number) {
+
+  }
+
+  async recalculatePublicRating(movieId: string) {
+
+  }
+
+  async addRating(movieId: string, userId: string, value: number) {
 
   }
 

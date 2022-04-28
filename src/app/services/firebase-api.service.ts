@@ -5,10 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import {
   collection, getFirestore, arrayUnion,
-  doc, setDoc, updateDoc, getDoc, getDocs, query
+  doc, setDoc, updateDoc, getDoc, getDocs,
+  query, where
 } from 'firebase/firestore';
-
-// import { arrayUnion, doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 
 import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
@@ -19,18 +18,8 @@ import { environment } from 'src/environments/environment';
 })
 export class FirebaseApiService {
 
-
-  // firebaseConfig = {
-  //   apiKey: "AIzaSyA1RGOcLKmaeYwosNvyxXYVzlKLC7kV2k8",
-  //   authDomain: "mtech-movie-2.firebaseapp.com",
-  //   projectId: "mtech-movie-2",
-  //   storageBucket: "mtech-movie-2.appspot.com",
-  //   messagingSenderId: "514645146266",
-  //   appId: "1:514645146266:web:2bfa7452c65c63d4387d23"
-  // };
   // app: any;
   // db: any;
-
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
 
@@ -43,7 +32,6 @@ export class FirebaseApiService {
 
   // initialize firebase app
   async init() {
-
 
     // // only initialize app if app does not exist
     // this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
@@ -62,7 +50,14 @@ export class FirebaseApiService {
       querySnapshot.forEach(doc => {
         console.log(doc.id, " => ", doc.data());
       });
+      console.log("---");
     });
+
+    this.getUserById('uVxllDLwVVrBjKNIGfub').then(data => {
+      console.log(data);
+    });
+
+    this.getUserByHandle('johndoe');
 
   }
 
@@ -71,12 +66,27 @@ export class FirebaseApiService {
   // read queries
   //
 
-  async getUserById(id: number, cb: (user: User) => void) {
-
+  async getUserById(id: string) {
+    const user = await getDoc(doc(this.db, 'users', id));
+    return user.data();
   }
 
-  async getCommentById(id: number, cb: (comment: Comment) => void) {
+  async getCommentById(id: string) {
+    const comment = await getDoc(doc(this.db, 'comments', id));
+    return comment.data();
+  }
 
+  async getCommentsByMovieId(id: string) {
+  }
+
+  async getRatingsByMovieId(id: string) {
+  }
+
+  async getUserByHandle(handle: string) {
+    const querySnapshot = await getDocs(
+      query(this.usersRef, where('handle', '==', handle))
+    );
+    return querySnapshot.docs[0].data();
   }
 
 

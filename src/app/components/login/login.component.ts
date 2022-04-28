@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
+import { arrayUnion, doc, getFirestore, setDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +19,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  app = initializeApp(environment.firebaseConfig);
+  auth = getAuth(this.app);
+  db = getFirestore(this.app)
+
   googleLogin: boolean = true;
   currentScreenSize: string = '';
-  XSmallScreen: boolean = false
+  XSmallScreen: boolean = false;
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -39,16 +49,17 @@ export class LoginComponent implements OnInit {
         Breakpoints.XLarge,
       ])
       .pipe()
-      .subscribe(result => {
+      .subscribe((result) => {
         for (const query of Object.keys(result.breakpoints)) {
           if (result.breakpoints[query]) {
-            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+            this.currentScreenSize =
+              this.displayNameMap.get(query) ?? 'Unknown';
           }
         }
         if (this.currentScreenSize === 'XSmall') {
-          this.XSmallScreen = true
+          this.XSmallScreen = true;
         } else {
-          this.XSmallScreen = false
+          this.XSmallScreen = false;
         }
       });
   }
@@ -59,18 +70,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = '';
+  password = '';
   hide = true;
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
+  // getErrorMessage() {
+  //   if (this.email.hasError('required')) {
+  //     return 'You must enter a value';
+  //   }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  app = initializeApp(environment.firebaseConfig);
+  //   return this.email.hasError('email') ? 'Not a valid email' : '';
+  // }
 
   loginUser(): void {
     const auth = getAuth();
@@ -84,7 +94,13 @@ export class LoginComponent implements OnInit {
         const user = result.user;
         console.log(result.user);
         localStorage.setItem('loggedIn', 'true')
-
+        //create user doc in firestore
+        this.userService.getUID.subscribe((user: any) => {
+          setDoc(doc(this.db, 'users', user), {
+            watchlist: [],
+            favorites: []
+          }, { merge: true })
+        });
         this.router.navigate(['search'])
         // ...
       })
@@ -99,11 +115,32 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
+  emailLogin() {
+    const auth = getAuth();
+    // console.log(this.email, this.password);
+    createUserWithEmailAndPassword(auth, this.email, this.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        localStorage.setItem('loggedIn', 'true');
+
+        this.router.navigate(['search']);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  }
   setGoogleLogin() {
-    this.googleLogin = true
+    this.googleLogin = true;
   }
   setEmailLogin() {
-    this.googleLogin = false
+    this.googleLogin = false;
   }
-
 }
+function movieId(movieId: any): any {
+  throw new Error('Function not implemented.');
+}
+

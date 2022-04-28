@@ -30,7 +30,7 @@ export class MovieDetailsComponent implements OnInit {
   trailerTitles: any = ['Official Trailer', 'Official IMAX® Trailer', 'Trailer (Official)', 'Theatrical Trailer', 'Main Trailer'];
   chatBar: string = '';
   chatName: string = '';
-  chatList: any = []; //{ user: 'user1', message: 'hi' }, { user: 'user2', message: 'hello' }
+  chatList: any = []; //{ user: 'user1', message: 'hi' }
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],

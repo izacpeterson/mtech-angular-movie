@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 // Firebase modules
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import {
-  collection, getFirestore,
-  doc, setDoc, updateDoc,
-  getDoc, getDocs, query
+  collection, getFirestore, arrayUnion,
+  doc, setDoc, updateDoc, getDoc, getDocs, query
 } from 'firebase/firestore';
 
-// custom interfaces
+// import { arrayUnion, doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
+
 import { User } from 'src/app/interfaces/user';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -74,6 +75,12 @@ export class FirebaseApiService {
   //
   // write queries
   //
+
+  async addToWatchList(movieId: number, uid: string) {
+    await updateDoc(doc(this.db, 'users', uid), {
+      watchlist: arrayUnion(movieId)
+    })
+  }
 
   calculateAverageRating(movieId: number) {
 

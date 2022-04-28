@@ -14,6 +14,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
+import { ChatPipe } from './pipes/chat.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
     MovieDetailsComponent,
     FavoritesComponent,
     NotFoundComponent,
+    ChatPipe,
   ],
   imports: [
     BrowserModule,

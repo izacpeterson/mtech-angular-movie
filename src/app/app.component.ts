@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'mtech-angular-movie';
+
+  constructor(
+    private firebase: FirebaseApiService
+  ) {}
+
+  ngOnInit() {
+    this.firebase.init();
+  }
+
 }

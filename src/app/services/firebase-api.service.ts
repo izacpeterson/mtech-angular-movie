@@ -82,6 +82,12 @@ export class FirebaseApiService {
     })
   }
 
+  async addToFavorites(movieId: number, uid: string) {
+    await updateDoc(doc(this.db, 'users', uid), {
+      favorites: arrayUnion(movieId)
+    })
+  }
+
   calculateAverageRating(movieId: number) {
 
   }

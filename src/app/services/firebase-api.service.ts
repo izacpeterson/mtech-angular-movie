@@ -5,10 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import {
   collection, getFirestore, arrayUnion,
-  doc, setDoc, updateDoc, getDoc, getDocs, query
+  doc, setDoc, updateDoc, getDoc, getDocs,
+  query, where
 } from 'firebase/firestore';
-
-// import { arrayUnion, doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 
 import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
@@ -54,6 +53,11 @@ export class FirebaseApiService {
       querySnapshot.forEach(doc => {
         console.log(doc.id, " => ", doc.data());
       });
+      console.log("---");
+    });
+
+    this.getUserById('uVxllDLwVVrBjKNIGfub').then(doc => {
+      console.log(doc.id, doc.data());
     });
 
   }
@@ -63,11 +67,14 @@ export class FirebaseApiService {
   // read queries
   //
 
-  async getUserById(id: number, cb: (user: User) => void) {
-
+  async getUserById(id: string) {
+    // const userDocRef = doc(this.db, 'users', id);
+    return await getDoc(doc(this.db, 'users', id));
   }
 
-  async getCommentById(id: number, cb: (comment: Comment) => void) {
+  async getUserByHandle(handle: string, cb: (user: User) => void) {}
+
+  async getCommentById(id: string, cb: (comment: Comment) => void) {
 
   }
 

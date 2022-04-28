@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -15,7 +20,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   googleLogin: boolean = true;
   currentScreenSize: string = '';
-  XSmallScreen: boolean = false
+  XSmallScreen: boolean = false;
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -39,16 +44,17 @@ export class LoginComponent implements OnInit {
         Breakpoints.XLarge,
       ])
       .pipe()
-      .subscribe(result => {
+      .subscribe((result) => {
         for (const query of Object.keys(result.breakpoints)) {
           if (result.breakpoints[query]) {
-            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+            this.currentScreenSize =
+              this.displayNameMap.get(query) ?? 'Unknown';
           }
         }
         if (this.currentScreenSize === 'XSmall') {
-          this.XSmallScreen = true
+          this.XSmallScreen = true;
         } else {
-          this.XSmallScreen = false
+          this.XSmallScreen = false;
         }
       });
   }
@@ -59,16 +65,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = '';
+  password = '';
   hide = true;
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
+  // getErrorMessage() {
+  //   if (this.email.hasError('required')) {
+  //     return 'You must enter a value';
+  //   }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
+  //   return this.email.hasError('email') ? 'Not a valid email' : '';
+  // }
 
   app = initializeApp(environment.firebaseConfig);
 
@@ -83,9 +90,9 @@ export class LoginComponent implements OnInit {
         // The signed-in user info.
         const user = result.user;
         console.log(result.user);
-        localStorage.setItem('loggedIn', 'true')
+        localStorage.setItem('loggedIn', 'true');
 
-        this.router.navigate(['search'])
+        this.router.navigate(['search']);
         // ...
       })
       .catch((error) => {
@@ -99,11 +106,28 @@ export class LoginComponent implements OnInit {
         // ...
       });
   }
+  emailLogin() {
+    const auth = getAuth();
+    // console.log(this.email, this.password);
+    createUserWithEmailAndPassword(auth, this.email, this.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        localStorage.setItem('loggedIn', 'true');
+
+        this.router.navigate(['search']);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  }
   setGoogleLogin() {
-    this.googleLogin = true
+    this.googleLogin = true;
   }
   setEmailLogin() {
-    this.googleLogin = false
+    this.googleLogin = false;
   }
-
 }

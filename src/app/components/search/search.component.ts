@@ -83,6 +83,7 @@ export class SearchComponent implements OnInit {
     let filteredString = this.searchInput.replace(/ /g, '+').toLowerCase();
     this.apiService.searchMovies(filteredString, this.searchPageCount++).pipe(take(1),
       map((res: any) => {
+        res.total_pages === 0 ? this.hasResults = false : this.hasResults = true
         res.results.forEach((movie: any) => {
           this.displayedMovies.push(movie);
         })

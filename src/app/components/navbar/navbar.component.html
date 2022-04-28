@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar *ngIf="!XSmallScreen" class="toolbar">
   <button mat-button routerLink="/">
     <h1>WebFlix</h1>
   </button>
@@ -7,7 +7,23 @@
   <span class="spacer"></span>
   <span>{{ navName }}</span>
 
-  <button mat-icon-button routerLink="/login">
+  <button mat-icon-button [matMenuTriggerFor]="logout">
     <mat-icon>person</mat-icon>
   </button>
+  <mat-menu #logout="matMenu">
+    <button mat-menu-item (click)="logOutUser()">Logout</button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-toolbar *ngIf="XSmallScreen" class="toolbar">
+  <button mat-button routerLink="/" [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>WebFlix</h1>
+  <mat-menu #menu="matMenu">
+    <span mat-menu-item>{{navName}}</span>
+    <button mat-menu-item routerLink="/favorites">Favorites</button>
+    <button mat-menu-item routerLink="/search">Search</button>
+    <button mat-menu-item (click)="logOutUser()">Logout</button>
+  </mat-menu>
 </mat-toolbar>

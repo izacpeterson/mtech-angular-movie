@@ -5,13 +5,14 @@ import { LoginComponent } from '../components/login/login.component';
 import { MovieDetailsComponent } from '../components/movie-details/movie-details.component';
 import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { SearchComponent } from '../components/search/search.component';
+import { AuthGuard } from '../shared/auth.guard';
 
 const routes: Routes = [
-  { path: 'favorites', component: FavoritesComponent },
+  { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'details/:id', component: MovieDetailsComponent },
-  { path: 'search', component: SearchComponent },
-  { path: '', component: LoginComponent },
+  { path: 'details/:id', component: MovieDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
+  { path: '', component: SearchComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 

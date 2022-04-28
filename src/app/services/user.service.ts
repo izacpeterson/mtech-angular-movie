@@ -23,7 +23,7 @@ export class UserService {
         console.log(user);
         uid = user.uid;
         subscriber.next(uid);
-        // console.log(uid);
+        console.log(uid);
         localStorage.setItem('loggedIn', 'true')
       } else {
         // User is signed out

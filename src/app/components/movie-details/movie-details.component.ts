@@ -71,7 +71,7 @@ export class MovieDetailsComponent implements OnInit {
     this.apiService.getMovieDetails(this.movieId).pipe(
       map((res: any) => {
         this.movie = res;
-        console.log('movie info', this.movie);
+        // console.log('movie info', this.movie);
       })
     ).subscribe();
     this.apiService.getExtendedMovieDetails(this.movieId, 'release_dates').pipe(
@@ -99,8 +99,8 @@ export class MovieDetailsComponent implements OnInit {
           }
         })
         // console.log('crew', res.crew);
-        console.log('directors', this.directors);
-        console.log('writers', this.writers);
+        // console.log('directors', this.directors);
+        // console.log('writers', this.writers);
       })
     ).subscribe()
 

@@ -75,3 +75,20 @@
         <h2>No Official Trailers</h2>
     </div>
 </div>
+
+<div class="commentBox">
+    <h1>Comments:</h1>
+    <div>
+        <mat-form-field class="chat-form-field">
+            <mat-label>Clearable input</mat-label>
+            <input matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()">
+            <button *ngIf="chatBar" matSuffix mat-icon-button aria-label="Clear" (click)="chatBar=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button (click)="sendChat()">Send</button>
+    </div>
+    <div *ngFor="let message of chatList">
+        {{message.user}}: {{message.message}}
+    </div>
+</div>

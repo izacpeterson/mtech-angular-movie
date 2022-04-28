@@ -7,6 +7,8 @@ import { CrewMember } from 'src/app/interfaces/crew-member';
 import { MovieDetails } from 'src/app/interfaces/movie-details';
 import { ApiService } from 'src/app/services/api.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ChatPipe } from 'src/app/pipes/chat.pipe';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -26,6 +28,9 @@ export class MovieDetailsComponent implements OnInit {
   videos: any;
   officialTrailers: any = [];
   trailerTitles: any = ['Official Trailer', 'Official IMAX® Trailer', 'Trailer (Official)', 'Theatrical Trailer', 'Main Trailer'];
+  chatBar: string = '';
+  chatName: string = '';
+  chatList: any = []; //{ user: 'user1', message: 'hi' }, { user: 'user2', message: 'hello' }
 
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
@@ -40,6 +45,8 @@ export class MovieDetailsComponent implements OnInit {
     private apiService: ApiService,
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
+    private userService: UserService,
+
   ) {
     breakpointObserver
       .observe([
@@ -115,6 +122,10 @@ export class MovieDetailsComponent implements OnInit {
         })
       })
     ).subscribe();
+
+    this.userService.getUserName.subscribe((name: any) => {
+      this.chatName = name;
+    });
   }
 
   getImageUrl() {
@@ -123,5 +134,16 @@ export class MovieDetailsComponent implements OnInit {
     } else {
       return `url('${this.imageURL}w342/${this.movie.poster_path}`
     }
+  }
+
+  sendChat() {
+    let filteredChat = new ChatPipe().transform(this.chatBar);
+    this.chatList.push({ user: this.chatName, message: filteredChat });
+    this.chatBar = '';
+    //console.log(this.chatList);
+
+    //send 'filteredChat' through firebase
+    //link the firebase observable to 'chatList' to keep an updated list of chats
+
   }
 }

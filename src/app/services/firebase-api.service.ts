@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { arrayUnion, doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 
 import { User } from 'src/app/interfaces/user';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -12,6 +13,8 @@ import { User } from 'src/app/interfaces/user';
 })
 export class FirebaseApiService {
 
+  app = initializeApp(environment.firebaseConfig)
+  db = getFirestore(this.app)
   apiKey: string = "";
 
   constructor() {
@@ -33,6 +36,12 @@ export class FirebaseApiService {
   //
   // write queries
   //
+
+  async addToWatchList(movieId: number, uid: string) {
+    await updateDoc(doc(this.db, 'users', uid), {
+      watchlist: arrayUnion(movieId)
+    })
+  }
 
   calculateAverageRating(movieId: number) {
 

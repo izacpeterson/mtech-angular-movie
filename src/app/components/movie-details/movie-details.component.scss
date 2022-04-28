@@ -161,12 +161,26 @@
 
 .commentBox {
     display: flex;
+    align-items: center;
     flex-direction: column;
     text-align: center;
-    padding-bottom: 50px;
-    margin: 50px 0 10px 0px;
+    max-height: 300px;
+    overflow: auto;
 
-    .chat-form-field {
-        width: 200px;
+    .comment {
+        text-align: center;
+        width: 300px;
+    }
+}
+
+.commentInput {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    padding-bottom: 50px;
+
+    button {
+        height: 40px;
+        margin: 5px;
     }
 }

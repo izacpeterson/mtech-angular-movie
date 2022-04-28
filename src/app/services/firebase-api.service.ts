@@ -28,18 +28,27 @@ export class FirebaseApiService {
   };
   app: any;
   db: any;
+  usersRef: any;
+  moviesRef: any;
+  commentsRef: any;
 
   constuctor() {}
 
   // initialize firebase app
   async init() {
+
     // only initialize app if app does not exist
     this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
+
+    // database refrence
     this.db = getFirestore(this.app);
 
-    const usersRef = collection(this.db, 'users');
+    // collection refrences
+    this.usersRef = collection(this.db, 'users');
+    this.moviesRef = collection(this.db, 'movies');
+    this.commentsRef = collection(this.db, 'comments');
 
-    getDocs(collection(this.db, 'users')).then(querySnapshot => {
+    getDocs(this.usersRef).then(querySnapshot => {
       console.log(querySnapshot);
       querySnapshot.forEach(doc => {
         console.log(doc.id, " => ", doc.data());

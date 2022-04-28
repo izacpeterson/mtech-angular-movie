@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
+import { arrayUnion, doc, getFirestore, setDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  app = initializeApp(environment.firebaseConfig);
+  auth = getAuth(this.app);
+  db = getFirestore(this.app)
+
   googleLogin: boolean = true;
   currentScreenSize: string = '';
   XSmallScreen: boolean = false
@@ -70,8 +75,6 @@ export class LoginComponent implements OnInit {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  app = initializeApp(environment.firebaseConfig);
-
   loginUser(): void {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -84,7 +87,13 @@ export class LoginComponent implements OnInit {
         const user = result.user;
         console.log(result.user);
         localStorage.setItem('loggedIn', 'true')
-
+        //create user doc in firestore
+        this.userService.getUID.subscribe((user: any) => {
+          setDoc(doc(this.db, 'users', user), {
+            watchlist: [],
+            favorites: []
+          }, { merge: true })
+        });
         this.router.navigate(['search'])
         // ...
       })
@@ -107,3 +116,7 @@ export class LoginComponent implements OnInit {
   }
 
 }
+function movieId(movieId: any): any {
+  throw new Error('Function not implemented.');
+}
+

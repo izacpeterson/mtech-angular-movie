@@ -158,3 +158,15 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+
+.commentBox {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 50px;
+    margin: 50px 0 10px 0px;
+
+    .chat-form-field {
+        width: 200px;
+    }
+}

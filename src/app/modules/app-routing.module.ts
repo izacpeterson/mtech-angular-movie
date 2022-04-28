@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: '', component: SearchComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
-
 ];
 
 @NgModule({

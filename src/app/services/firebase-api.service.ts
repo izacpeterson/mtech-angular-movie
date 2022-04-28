@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FirebaseApiService {
 
+
   // firebaseConfig = {
   //   apiKey: "AIzaSyA1RGOcLKmaeYwosNvyxXYVzlKLC7kV2k8",
   //   authDomain: "mtech-movie-2.firebaseapp.com",
@@ -37,16 +38,19 @@ export class FirebaseApiService {
   moviesRef: any;
   commentsRef: any;
 
-  constuctor() { }
+  constuctor() {}
+
 
   // initialize firebase app
   async init() {
+
 
     // // only initialize app if app does not exist
     // this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
 
     // // database refrence
     // this.db = getFirestore(this.app);
+
 
     // collection refrences
     this.usersRef = collection(this.db, 'users');

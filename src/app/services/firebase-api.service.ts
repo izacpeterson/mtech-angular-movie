@@ -18,18 +18,8 @@ import { environment } from 'src/environments/environment';
 })
 export class FirebaseApiService {
 
-
-  // firebaseConfig = {
-  //   apiKey: "AIzaSyA1RGOcLKmaeYwosNvyxXYVzlKLC7kV2k8",
-  //   authDomain: "mtech-movie-2.firebaseapp.com",
-  //   projectId: "mtech-movie-2",
-  //   storageBucket: "mtech-movie-2.appspot.com",
-  //   messagingSenderId: "514645146266",
-  //   appId: "1:514645146266:web:2bfa7452c65c63d4387d23"
-  // };
   // app: any;
   // db: any;
-
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
 
@@ -42,7 +32,6 @@ export class FirebaseApiService {
 
   // initialize firebase app
   async init() {
-
 
     // // only initialize app if app does not exist
     // this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
@@ -64,9 +53,11 @@ export class FirebaseApiService {
       console.log("---");
     });
 
-    this.getUserById('uVxllDLwVVrBjKNIGfub').then(doc => {
-      console.log(doc.id, doc.data());
+    this.getUserById('uVxllDLwVVrBjKNIGfub').then(data => {
+      console.log(data);
     });
+
+    this.getUserByHandle('johndoe');
 
   }
 
@@ -76,14 +67,26 @@ export class FirebaseApiService {
   //
 
   async getUserById(id: string) {
-    // const userDocRef = doc(this.db, 'users', id);
-    return await getDoc(doc(this.db, 'users', id));
+    const user = await getDoc(doc(this.db, 'users', id));
+    return user.data();
   }
 
-  async getUserByHandle(handle: string, cb: (user: User) => void) {}
+  async getCommentById(id: string) {
+    const comment = await getDoc(doc(this.db, 'comments', id));
+    return comment.data();
+  }
 
-  async getCommentById(id: string, cb: (comment: Comment) => void) {
+  async getCommentsByMovieId(id: string) {
+  }
 
+  async getRatingsByMovieId(id: string) {
+  }
+
+  async getUserByHandle(handle: string) {
+    const querySnapshot = await getDocs(
+      query(this.usersRef, where('handle', '==', handle))
+    );
+    return querySnapshot.docs[0].data();
   }
 
 

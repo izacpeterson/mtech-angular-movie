@@ -76,9 +76,20 @@
     </div>
 </div>
 
-<div class="commentBox">
-    <div>
-        <h1>Comments:</h1>
+
+<div class="commentContainer">
+    <h1 style="text-align: center;">Comments:</h1>
+
+    <div class="commentBox">
+        <div *ngFor="let message of chatList">
+            <mat-card class="comment">
+                <h3>{{message.username}}: {{message.comment}}</h3>
+            </mat-card>
+        </div>
+
+    </div>
+
+    <div class="commentInput">
         <mat-form-field class="chat-form-field">
             <mat-label>Comment</mat-label>
             <input matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()">
@@ -88,7 +99,5 @@
         </mat-form-field>
         <button mat-raised-button (click)="sendChat()">Send</button>
     </div>
-    <div *ngFor="let message of chatList">
-        {{message.user}}: {{message.message}}
-    </div>
+
 </div>

@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+// Firebase modules
+import { initializeApp, getApp, getApps } from 'firebase/app';
+import {
+  collection, getFirestore,
+  doc, setDoc, updateDoc,
+  getDoc, getDocs, query
+} from 'firebase/firestore';
 
+// custom interfaces
 import { User } from 'src/app/interfaces/user';
 
 
@@ -12,11 +18,36 @@ import { User } from 'src/app/interfaces/user';
 })
 export class FirebaseApiService {
 
-  apiKey: string = "";
+  firebaseConfig = {
+    apiKey: "AIzaSyA1RGOcLKmaeYwosNvyxXYVzlKLC7kV2k8",
+    authDomain: "mtech-movie-2.firebaseapp.com",
+    projectId: "mtech-movie-2",
+    storageBucket: "mtech-movie-2.appspot.com",
+    messagingSenderId: "514645146266",
+    appId: "1:514645146266:web:2bfa7452c65c63d4387d23"
+  };
+  app: any;
+  db: any;
 
-  constructor() {
-    console.log("firebase API running");
+  constuctor() {}
+
+  // initialize firebase app
+  async init() {
+    // only initialize app if app does not exist
+    this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
+    this.db = getFirestore(this.app);
+
+    const usersRef = collection(this.db, 'users');
+
+    getDocs(collection(this.db, 'users')).then(querySnapshot => {
+      console.log(querySnapshot);
+      querySnapshot.forEach(doc => {
+        console.log(doc.id, " => ", doc.data());
+      });
+    });
+
   }
+
 
   //
   // read queries
@@ -29,6 +60,7 @@ export class FirebaseApiService {
   async getCommentById(id: number, cb: (comment: Comment) => void) {
 
   }
+
 
   //
   // write queries

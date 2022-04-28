@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: '', component: LoginComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
-
 ];
 
 @NgModule({

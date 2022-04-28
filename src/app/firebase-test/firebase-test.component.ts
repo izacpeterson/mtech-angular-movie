@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 
 @Component({
@@ -8,7 +9,9 @@ import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 })
 export class FirebaseTestComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
   }

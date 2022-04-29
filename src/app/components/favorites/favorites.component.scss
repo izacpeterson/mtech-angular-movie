@@ -1,0 +1,62 @@
+.columns {
+    display: flex;
+    justify-content: space-between;
+
+    .columnTitle {
+        margin-top: 10px;
+        text-align: center;
+    }
+}
+
+
+.movieContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+// $cardWidth: 600px;
+// $cardHeight: 350px;
+
+.customCard {
+    text-align: center;
+    position: relative;
+    // width: $cardWidth;
+    // height: $cardHeight;
+    margin: 10px;
+    transition: .2s;
+
+    img {
+        width: 100%;
+        // height: $cardHeight;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        position: absolute;
+        width: calc(100% - 20px);
+        background-color: rgba(0, 0, 0, 0.366);
+        padding: 3px 10px;
+
+        .title {
+            align-self: center;
+            font-size: 1rem;
+        }
+    }
+
+}
+
+.customCard:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.scrollButton {
+    position: fixed;
+    margin-bottom: 20px;
+    bottom: 0;
+    left: 50%;
+}

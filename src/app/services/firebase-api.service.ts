@@ -15,6 +15,7 @@ import {
   query,
   where,
   onSnapshot,
+  arrayRemove,
 } from 'firebase/firestore';
 
 import { User } from 'src/app/interfaces/user';
@@ -127,6 +128,35 @@ export class FirebaseApiService {
   }
 
   async setPublicRating(movieId: string, rating: number) {}
+
+  async deleteFromWatchlist(
+    uid: any,
+    movieId: number,
+    movieTitle: string,
+    posterPath: string
+  ) {
+    await updateDoc(doc(this.db, 'users', uid), {
+      watchlist: arrayRemove({
+        movieId: movieId,
+        movieTitle: movieTitle,
+        posterPath: posterPath,
+      }),
+    });
+  }
+  async deleteFromFavorites(
+    uid: any,
+    movieId: number,
+    movieTitle: string,
+    posterPath: string
+  ) {
+    await updateDoc(doc(this.db, 'users', uid), {
+      favorites: arrayRemove({
+        movieId: movieId,
+        movieTitle: movieTitle,
+        posterPath: posterPath,
+      }),
+    });
+  }
 
   async recalculatePublicRating(movieId: string) {}
 

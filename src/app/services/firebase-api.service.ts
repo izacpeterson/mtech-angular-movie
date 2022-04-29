@@ -18,8 +18,6 @@ import { environment } from 'src/environments/environment';
 })
 export class FirebaseApiService {
 
-  // app: any;
-  // db: any;
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
 
@@ -27,18 +25,11 @@ export class FirebaseApiService {
   moviesRef: any;
   commentsRef: any;
 
-  constuctor() {}
+  constuctor() { }
 
 
   // initialize firebase app
   async init() {
-
-    // // only initialize app if app does not exist
-    // this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
-
-    // // database refrence
-    // this.db = getFirestore(this.app);
-
 
     // collection refrences
     this.usersRef = collection(this.db, 'users');
@@ -97,17 +88,37 @@ export class FirebaseApiService {
   // write queries
   //
 
-  async addToWatchList(movieId: number, uid: string) {
+  async addToWatchList(movieId: number, uid: string, posterPath: string, movieTitle: string) {
     await updateDoc(doc(this.db, 'users', uid), {
-      watchlist: arrayUnion(movieId)
+      watchlist: arrayUnion({
+        movieId: movieId,
+        posterPath: posterPath,
+        movieTitle: movieTitle
+      })
     })
   }
 
-  async addToFavorites(movieId: number, uid: string) {
+  async addToFavorites(movieId: number, uid: string, posterPath: string, movieTitle: string) {
     await updateDoc(doc(this.db, 'users', uid), {
-      favorites: arrayUnion(movieId)
+      favorites: arrayUnion({
+        movieId: movieId,
+        posterPath: posterPath,
+        movieTitle: movieTitle
+      })
     })
   }
+
+
+  async addToComments(movieId: string, username: any, comment: any) {
+    await updateDoc(doc(this.db, 'movies', movieId), {
+      comments: arrayUnion({
+        username: username,
+        comment: comment
+      })
+    })
+  }
+
+  calculateAverageRating(movieId: number) {
 
 
   async setPublicRating(movieId: string, rating: number) {

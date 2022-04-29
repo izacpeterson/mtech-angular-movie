@@ -1,186 +1,195 @@
 .main-details {
-    position: relative;
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1.5rem;
+  position: relative;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        bottom: 0px;
-        left: 0px;
-        background-color: rgba(0, 0, 0, 0.65);
-    }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.65);
+  }
 }
 
 .left {
-    position: relative;
+  position: relative;
 }
 
 .right {
-    width: 50%;
-    position: relative;
-    margin: 1.5rem 0;
+  width: 50%;
+  position: relative;
+  margin: 1.5rem 0;
 
-    h1 {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
+  h1 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+  }
+
+  .subtitle-details {
+    display: flex;
+    flex-wrap: wrap;
+
+    p,
+    div {
+      margin-right: 1rem;
     }
 
-    .subtitle-details {
-        display: flex;
-        flex-wrap: wrap;
-
-        p,
-        div {
-            margin-right: 1rem;
-        }
-
-        span {
-            margin-right: .5rem;
-        }
+    span {
+      margin-right: 0.5rem;
     }
+  }
 }
 
 .xsmall-right {
-    position: relative;
-    margin: 1.5rem;
+  position: relative;
+  margin: 1.5rem;
 
-    h1 {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
+  h1 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+  }
+
+  .subtitle-details {
+    display: flex;
+    flex-wrap: wrap;
+
+    p,
+    div {
+      margin-right: 1rem;
     }
 
-    .subtitle-details {
-        display: flex;
-        flex-wrap: wrap;
-
-        p,
-        div {
-            margin-right: 1rem;
-        }
-
-        span {
-            margin-right: .5rem;
-        }
+    span {
+      margin-right: 0.5rem;
     }
-
+  }
 }
 
 .crew-div {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    div {
-        margin-right: 2rem;
+  div {
+    margin-right: 2rem;
 
-        h3 {
-            margin-bottom: 0;
-        }
+    h3 {
+      margin-bottom: 0;
     }
+  }
 }
 
 .crew {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    p {
-        margin-right: .75rem;
-    }
+  p {
+    margin-right: 0.75rem;
+  }
 }
 
 .castContainer {
+  .castTitle {
+    text-align: center;
+  }
 
-    .castTitle {
-        text-align: center;
-    }
-
-    .castInfo {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        align-items: baseline;
-    }
+  .castInfo {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    align-items: baseline;
+  }
 }
 
 .card {
-    margin: 0 10px 0 10px;
+  margin: 0 10px 0 10px;
 
-    .castName {
-        font-size: 20px;
+  .castName {
+    font-size: 20px;
+  }
+
+  .castChar {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  img {
+    width: 150px;
+  }
+
+  .imgContainer {
+    overflow: hidden;
+
+    .noPhoto {
+      margin: 0px 0px 40px 0px;
     }
-
-    .castChar {
-        margin-top: 10px;
-        font-size: 15px;
-    }
-
-    img {
-        width: 150px;
-    }
-
-    .imgContainer {
-        overflow: hidden;
-
-        .noPhoto {
-            margin: 0px 0px 40px 0px;
-        }
-    }
-
+  }
 }
 
 .production-header {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .production-companies {
-    display: flex;
+  display: flex;
 
-    .company {
-        margin-right: 1rem;
-    }
-
+  .company {
+    margin-right: 1rem;
+  }
 }
 
 .trailerContainer {
-    text-align: center;
-    margin: 20px 0 20px 0;
+  text-align: center;
+  margin: 20px 0 20px 0;
 }
 
 .trailers-flexbox {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .commentBox {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    max-height: 300px;
-    overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  max-height: 300px;
+  overflow: auto;
 
-    .comment {
-        text-align: center;
-        width: 300px;
-    }
+  .comment {
+    text-align: center;
+    width: 300px;
+  }
 }
 
 .commentInput {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-    padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  padding-bottom: 50px;
 
-    button {
-        height: 40px;
-        margin: 5px;
-    }
+  button {
+    height: 40px;
+    margin: 5px;
+  }
+}
+.rateMovie {
+  display: flex;
+  align-items: center;
+  p {
+    display: flex;
+    align-items: center;
+  }
+  button {
+    background: none;
+    color: white;
+    border: none;
+  }
 }

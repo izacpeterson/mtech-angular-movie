@@ -1,103 +1,126 @@
-<div class="main-details" [ngStyle]="{'background-image': getImageUrl()}">
-    <div class="left" *ngIf="!XSmallScreen">
-        <img [src]="imageURL + 'w342' + movie.poster_path" alt="">
+<div class="main-details" [ngStyle]="{ 'background-image': getImageUrl() }">
+  <div class="left" *ngIf="!XSmallScreen">
+    <img [src]="imageURL + 'w342' + movie.poster_path" alt="" />
+  </div>
+  <div [ngClass]="XSmallScreen ? 'xsmall-right' : 'right'">
+    <h1>{{ movie.title }}</h1>
+    <div class="subtitle-details">
+      <p>{{ movieRating }}</p>
+      <p>{{ movie.release_date | date }}</p>
+      <div class="genres">
+        <span *ngFor="let genre of movie.genres">{{ genre.name }}</span>
+      </div>
+      <p>{{ movie.runtime }} minutes</p>
+      <p>{{ userRating }}/5</p>
     </div>
-    <div [ngClass]="XSmallScreen ? 'xsmall-right': 'right'">
-        <h1>{{movie.title}}</h1>
-        <div class="subtitle-details">
-            <p>{{movieRating}}</p>
-            <p>{{movie.release_date | date }}</p>
-            <div class="genres">
-                <span *ngFor="let genre of movie.genres">{{genre.name}}</span>
-            </div>
-            <p>{{movie.runtime}} minutes</p>
-        </div>
-        <h2>{{movie.tagline}}</h2>
-        <p>{{movie.overview}}</p>
-        <h3 class="production-header">Produced By</h3>
-        <div class="production-companies">
-            <div class="company" *ngFor="let company of movie.production_companies">
-                <!-- <img *ngIf="company.logo_path" [src]="imageURL + 'w45' + company.logo_path" alt=""> -->
-                <p>{{company.name}}</p>
-            </div>
-        </div>
-        <div class="crew-div">
-            <div>
-                <h3>Directed By</h3>
-                <div class="crew">
-                    <p *ngFor="let director of directors">{{director.name}}</p>
-                </div>
-            </div>
-            <div *ngIf="writers">
-                <h3>Written By</h3>
-                <div class="crew">
-                    <p *ngFor="let writer of writers">{{writer.name}}</p>
-                </div>
-            </div>
-        </div>
+    <div class="rateMovie">
+      <p>Your rating:</p>
+      <button (click)="addRating(1)">1</button>
+      <button (click)="addRating(2)">2</button>
+      <button (click)="addRating(3)">3</button>
+      <button (click)="addRating(4)">4</button>
+      <button (click)="addRating(5)">5</button>
     </div>
-
+    <h2>{{ movie.tagline }}</h2>
+    <p>{{ movie.overview }}</p>
+    <h3 class="production-header">Produced By</h3>
+    <div class="production-companies">
+      <div class="company" *ngFor="let company of movie.production_companies">
+        <!-- <img *ngIf="company.logo_path" [src]="imageURL + 'w45' + company.logo_path" alt=""> -->
+        <p>{{ company.name }}</p>
+      </div>
+    </div>
+    <div class="crew-div">
+      <div>
+        <h3>Directed By</h3>
+        <div class="crew">
+          <p *ngFor="let director of directors">{{ director.name }}</p>
+        </div>
+      </div>
+      <div *ngIf="writers">
+        <h3>Written By</h3>
+        <div class="crew">
+          <p *ngFor="let writer of writers">{{ writer.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="castContainer">
-    <h1 class="castTitle">Cast:</h1>
-    <div class="castInfo">
-        <section *ngFor="let person of cast">
-            <div class="card">
-                <div class="imgContainer">
-                    <img *ngIf="person.profile_path" [src]="imageURL + 'w185' + person.profile_path" alt="">
-                    <img class="noPhoto" *ngIf="!person.profile_path" src="../../../assets/images/noCastPhoto.png"
-                        alt="">
+  <h1 class="castTitle">Cast:</h1>
+  <div class="castInfo">
+    <section *ngFor="let person of cast">
+      <div class="card">
+        <div class="imgContainer">
+          <img
+            *ngIf="person.profile_path"
+            [src]="imageURL + 'w185' + person.profile_path"
+            alt=""
+          />
+          <img
+            class="noPhoto"
+            *ngIf="!person.profile_path"
+            src="../../../assets/images/noCastPhoto.png"
+            alt=""
+          />
 
-                    <!-- {{person.profile_path !== null ?
+          <!-- {{person.profile_path !== null ?
                     '<img src="https://image.tmdb.org/t/p/w185{{person.profile_path}}" alt="">'
                     : '<img src="../../../assets/images/noCastPhoto.png" alt="">'}} -->
-
-                </div>
-                <div class="castName">{{person.name}}</div>
-                <div class="castChar">{{person.character}}</div>
-            </div>
-        </section>
-    </div>
+        </div>
+        <div class="castName">{{ person.name }}</div>
+        <div class="castChar">{{ person.character }}</div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <div class="trailerContainer">
-    <h1>Official Trailer:</h1>
-    <div class="trailers-flexbox">
-        <div *ngFor="let movie of officialTrailers">
-            <iframe width="350" height="197" [src]="movie" title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
+  <h1>Official Trailer:</h1>
+  <div class="trailers-flexbox">
+    <div *ngFor="let movie of officialTrailers">
+      <iframe
+        width="350"
+        height="197"
+        [src]="movie"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      >
+      </iframe>
     </div>
-    <div *ngIf="officialTrailers.length == 0">
-        <h2>No Official Trailers</h2>
-    </div>
+  </div>
+  <div *ngIf="officialTrailers.length == 0">
+    <h2>No Official Trailers</h2>
+  </div>
 </div>
 
-
 <div class="commentContainer">
-    <h1 style="text-align: center;">Comments:</h1>
+  <h1 style="text-align: center">Comments:</h1>
 
-    <div class="commentBox">
-        <div *ngFor="let message of chatList">
-            <mat-card class="comment">
-                <h3>{{message.username}}: {{message.comment}}</h3>
-            </mat-card>
-        </div>
-
+  <div class="commentBox">
+    <div *ngFor="let message of chatList">
+      <mat-card class="comment">
+        <h3>{{ message.username }}: {{ message.comment }}</h3>
+      </mat-card>
     </div>
+  </div>
 
-    <div class="commentInput">
-        <mat-form-field class="chat-form-field">
-            <mat-label>Comment</mat-label>
-            <input matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()">
-            <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar=''">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
-        <button mat-raised-button (click)="sendChat()">Send</button>
-    </div>
-
+  <div class="commentInput">
+    <mat-form-field class="chat-form-field">
+      <mat-label>Comment</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="chatBar"
+        (keydown.enter)="sendChat()"
+      />
+      <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button (click)="sendChat()">Send</button>
+  </div>
 </div>

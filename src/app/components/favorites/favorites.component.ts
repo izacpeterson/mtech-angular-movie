@@ -1,7 +1,6 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/api.service';
 import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 import { UserService } from 'src/app/services/user.service'
 
@@ -45,7 +44,6 @@ export class FavoritesComponent implements OnInit {
   constructor(
     private userService: UserService,
     private firebaseService: FirebaseApiService,
-    private apiService: ApiService,
     private scroll: ViewportScroller,
   ) { }
 
@@ -54,7 +52,7 @@ export class FavoritesComponent implements OnInit {
     this.userService.getUID.subscribe((user: any) => {
       this.currentUserId = user;
       this.firebaseService.getUserById(user).then((data: any) => {
-        this.userData = data;
+        //this.userData = data;
         this.watchList = data.watchlist;
         this.favorites = data.favorites;
         //console.log("DATA", this.userData);
@@ -76,6 +74,7 @@ export class FavoritesComponent implements OnInit {
       this.showScrollBtn = false;
     }
   }
+
   scrollToTop() {
     this.scroll.scrollToPosition([0, 0]);
   }

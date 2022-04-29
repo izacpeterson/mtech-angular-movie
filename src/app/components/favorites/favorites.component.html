@@ -1,6 +1,6 @@
 <div class="columns">
     <div>
-        <h1 class="columnTitle">Favorites</h1>
+        <h1 class="columnTitle">Favorites:</h1>
         <div class="movieContainer">
             <div *ngFor="let movie of favorites">
                 <div class="customCard">
@@ -12,12 +12,8 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>
-                                <mat-icon>favorite</mat-icon>
-                                <span>Add to Favorites</span>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>watch_later</mat-icon>
-                                <span>Add to Watch List</span>
+                                <mat-icon>close</mat-icon>
+                                <span>Remove from Favorites</span>
                             </button>
                             <button mat-menu-item routerLink="/details/{{movie.movieId}}">
                                 <mat-icon>info</mat-icon>
@@ -39,7 +35,7 @@
     </div>
 
     <div>
-        <h1 class="columnTitle">Watch List</h1>
+        <h1 class="columnTitle">Watch List:</h1>
         <div class="movieContainer">
             <div *ngFor="let movie of watchList">
                 <div class="customCard">
@@ -51,12 +47,8 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>
-                                <mat-icon>favorite</mat-icon>
-                                <span>Add to Favorites</span>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>watch_later</mat-icon>
-                                <span>Add to Watch List</span>
+                                <mat-icon>close</mat-icon>
+                                <span>Remove from Watch List</span>
                             </button>
                             <button mat-menu-item routerLink="/details/{{movie.movieId}}">
                                 <mat-icon>info</mat-icon>
@@ -78,14 +70,12 @@
     </div>
 </div>
 
-<div class="upButton">
-    <div class="scrollButton" *ngIf="showScrollBtn" [@inOutAnimation]>
-        <button mat-fab (click)="scrollToTop()">
-            <mat-icon>arrow_upward</mat-icon>
-        </button>
-    </div>
-
+<div class="scrollButton" *ngIf="showScrollBtn" [@inOutAnimation]>
+    <button mat-fab (click)="scrollToTop()">
+        <mat-icon>arrow_upward</mat-icon>
+    </button>
 </div>
+
 
 
 <!-- <button (click)="test()">test</button> -->

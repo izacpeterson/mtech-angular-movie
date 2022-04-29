@@ -108,7 +108,6 @@ export class FirebaseApiService {
     })
   }
 
-
   async addToComments(movieId: string, username: any, comment: any) {
     await updateDoc(doc(this.db, 'movies', movieId), {
       comments: arrayUnion({
@@ -118,8 +117,9 @@ export class FirebaseApiService {
     })
   }
 
-  calculateAverageRating(movieId: number) {
+  async deleteFromWatchlist(movieid: number) {
 
+  }
 
   async setPublicRating(movieId: string, rating: number) {
 

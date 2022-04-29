@@ -19,11 +19,11 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="addToFavorites(movie.id)">
+                    <button mat-menu-item (click)="addToFavorites(movie.id, movie.poster_path, movie.title)">
                         <mat-icon>favorite</mat-icon>
                         <span>Add to Favorites</span>
                     </button>
-                    <button mat-menu-item (click)="addToWatchList(movie.id)">
+                    <button mat-menu-item (click)="addToWatchList(movie.id, movie.poster_path, movie.title)">
                         <mat-icon>watch_later</mat-icon>
                         <span>Add to Watch List</span>
                     </button>

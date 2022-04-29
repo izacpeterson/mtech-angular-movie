@@ -88,15 +88,23 @@ export class FirebaseApiService {
   // write queries
   //
 
-  async addToWatchList(movieId: number, uid: string) {
+  async addToWatchList(movieId: number, uid: string, posterPath: string, movieTitle: string) {
     await updateDoc(doc(this.db, 'users', uid), {
-      watchlist: arrayUnion(movieId)
+      watchlist: arrayUnion({
+        movieId: movieId,
+        posterPath: posterPath,
+        movieTitle: movieTitle
+      })
     })
   }
 
-  async addToFavorites(movieId: number, uid: string) {
+  async addToFavorites(movieId: number, uid: string, posterPath: string, movieTitle: string) {
     await updateDoc(doc(this.db, 'users', uid), {
-      favorites: arrayUnion(movieId)
+      favorites: arrayUnion({
+        movieId: movieId,
+        posterPath: posterPath,
+        movieTitle: movieTitle
+      })
     })
   }
 

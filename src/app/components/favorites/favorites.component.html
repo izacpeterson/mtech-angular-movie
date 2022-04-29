@@ -1,5 +1,91 @@
-<p>favorites works!</p>
-{{favorites | json}}
+<div class="columns">
+    <div>
+        <h1 class="columnTitle">Favorites</h1>
+        <div class="movieContainer">
+            <div *ngFor="let movie of favorites">
+                <div class="customCard">
+
+                    <div class="header">
+                        <div class="title">{{movie.movieTitle}}</div>
+                        <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>favorite</mat-icon>
+                                <span>Add to Favorites</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>watch_later</mat-icon>
+                                <span>Add to Watch List</span>
+                            </button>
+                            <button mat-menu-item routerLink="/details/{{movie.movieId}}">
+                                <mat-icon>info</mat-icon>
+                                <span>View Details</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                    <div class="clickArea" routerLink="/details/{{movie.movieId}}">
+                        <img *ngIf="movie.posterPath" mat-image
+                            src="https://image.tmdb.org/t/p/w185{{movie.posterPath}}" alt="Poster">
+                        <img *ngIf="!movie.posterPath" mat-image src="../../../assets/images/noPoster.png" alt="Poster"
+                            [ngStyle]="{'width': '185px', 'height': '279px'}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <h1 class="columnTitle">Watch List</h1>
+        <div class="movieContainer">
+            <div *ngFor="let movie of watchList">
+                <div class="customCard">
+
+                    <div class="header">
+                        <div class="title">{{movie.movieTitle}}</div>
+                        <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>favorite</mat-icon>
+                                <span>Add to Favorites</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>watch_later</mat-icon>
+                                <span>Add to Watch List</span>
+                            </button>
+                            <button mat-menu-item routerLink="/details/{{movie.movieId}}">
+                                <mat-icon>info</mat-icon>
+                                <span>View Details</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                    <div class="clickArea" routerLink="/details/{{movie.movieId}}">
+                        <img *ngIf="movie.posterPath" mat-image
+                            src="https://image.tmdb.org/t/p/w185{{movie.posterPath}}" alt="Poster">
+                        <img *ngIf="!movie.posterPath" mat-image src="../../../assets/images/noPoster.png" alt="Poster"
+                            [ngStyle]="{'width': '185px', 'height': '279px'}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="upButton">
+    <div class="scrollButton" *ngIf="showScrollBtn" [@inOutAnimation]>
+        <button mat-fab (click)="scrollToTop()">
+            <mat-icon>arrow_upward</mat-icon>
+        </button>
+    </div>
+
+</div>
 
 
-<button (click)="test()">test</button>
+<!-- <button (click)="test()">test</button> -->

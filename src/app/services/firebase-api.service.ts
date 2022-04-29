@@ -118,7 +118,6 @@ export class FirebaseApiService {
     })
   }
 
-  calculateAverageRating(movieId: number) {
 
 
   async setPublicRating(movieId: string, rating: number) {

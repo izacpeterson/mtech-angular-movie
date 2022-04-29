@@ -5,10 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import {
   collection, getFirestore, arrayUnion,
-  doc, setDoc, updateDoc, getDoc, getDocs, query
+  doc, setDoc, updateDoc, getDoc, getDocs,
+  query, where
 } from 'firebase/firestore';
-
-// import { arrayUnion, doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 
 import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
@@ -42,7 +41,14 @@ export class FirebaseApiService {
       querySnapshot.forEach(doc => {
         console.log(doc.id, " => ", doc.data());
       });
+      console.log("---");
     });
+
+    this.getUserById('uVxllDLwVVrBjKNIGfub').then(data => {
+      console.log(data);
+    });
+
+    this.getUserByHandle('johndoe');
 
   }
 
@@ -51,14 +57,32 @@ export class FirebaseApiService {
   // read queries
   //
 
-  async getUserById(id: number, cb: (user: User) => void) {
-
+  async getUserById(id: string) {
+    const user = await getDoc(doc(this.db, 'users', id));
+    return user.data();
   }
 
-  async getCommentById(id: number, cb: (comment: Comment) => void) {
-
+  async getCommentById(id: string) {
+    const comment = await getDoc(doc(this.db, 'comments', id));
+    return comment.data();
   }
 
+  async getCommentsByMovieId(id: string) {
+  }
+
+  async getRatingsByMovieId(id: string) {
+  }
+
+  async getUserByHandle(handle: string) {
+    const querySnapshot = await getDocs(
+      query(this.usersRef, where('handle', '==', handle))
+    );
+    return querySnapshot.docs[0].data();
+  }
+
+  calculateAverageRating(movieId: number) {
+
+  }
 
   //
   // write queries
@@ -76,6 +100,7 @@ export class FirebaseApiService {
     })
   }
 
+
   async addToComments(movieId: string, username: any, comment: any) {
     await updateDoc(doc(this.db, 'movies', movieId), {
       comments: arrayUnion({
@@ -86,6 +111,17 @@ export class FirebaseApiService {
   }
 
   calculateAverageRating(movieId: number) {
+
+
+  async setPublicRating(movieId: string, rating: number) {
+
+  }
+
+  async recalculatePublicRating(movieId: string) {
+
+  }
+
+  async addRating(movieId: string, userId: string, value: number) {
 
   }
 

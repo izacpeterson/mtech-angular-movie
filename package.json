@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "ng build",
+    "postdeploy": "firebase deploy",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -21,6 +23,7 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@angular/service-worker": "~13.2.0",
     "firebase": "^9.6.11",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

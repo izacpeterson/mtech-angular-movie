@@ -9,6 +9,10 @@ import { ApiService } from 'src/app/services/api.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ChatPipe } from 'src/app/pipes/chat.pipe';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
+import { setDoc, doc, getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -32,6 +36,10 @@ export class MovieDetailsComponent implements OnInit {
   chatName: string = '';
   chatList: any = []; //{ user: 'user1', message: 'hi' }
 
+  app = initializeApp(environment.firebaseConfig);
+  db = getFirestore(this.app);
+
+
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
     [Breakpoints.Small, 'Small'],
@@ -46,7 +54,7 @@ export class MovieDetailsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
     private userService: UserService,
-
+    private firebaseService: FirebaseApiService
   ) {
     breakpointObserver
       .observe([
@@ -126,6 +134,9 @@ export class MovieDetailsComponent implements OnInit {
     this.userService.getUserName.subscribe((name: any) => {
       this.chatName = name;
     });
+    setDoc(doc(this.db, 'movies', this.movieId.toString()), {
+      comments: []
+    }, { merge: true })
   }
 
   getImageUrl() {
@@ -144,6 +155,11 @@ export class MovieDetailsComponent implements OnInit {
 
     //send 'filteredChat' through firebase
     //link the firebase observable to 'chatList' to keep an updated list of chats
+    this.userService.getUserName.subscribe((user) => {
+      this.firebaseService.addToComments(this.movieId.toString(), user, filteredChat);
+    })
 
   }
 }
+
+

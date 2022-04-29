@@ -117,7 +117,9 @@ export class FirebaseApiService {
     })
   }
 
+
   async deleteFromWatchlist(movieid: number) {
+
 
   }
 

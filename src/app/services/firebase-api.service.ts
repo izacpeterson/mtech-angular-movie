@@ -117,6 +117,7 @@ export class FirebaseApiService {
     })
   }
 
+
   async deleteFromWatchlist(uid: any, movieId: number, movieTitle: string, posterPath: string) {
     await updateDoc(doc(this.db, 'users', uid), {
       watchlist: arrayRemove({

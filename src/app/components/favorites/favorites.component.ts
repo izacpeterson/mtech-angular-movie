@@ -70,6 +70,7 @@ export class FavoritesComponent implements OnInit {
         this.firebaseService.deleteFromFavorites(user, movieId, movieTitle, posterPath)
       }
     })
+    //loop through the chosen list variable, find the movie by it's id and remove it
   }
 
   test() {

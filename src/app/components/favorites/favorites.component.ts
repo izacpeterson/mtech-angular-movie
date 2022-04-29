@@ -66,8 +66,23 @@ export class FavoritesComponent implements OnInit {
     this.userService.getUID.subscribe((user) => {
       if (listName === 'watchlist') {
         this.firebaseService.deleteFromWatchlist(user, movieId, movieTitle, posterPath)
+
+        this.watchList.forEach((movie: any, index: any) => {
+          if (movie.movieId == movieId) {
+            this.watchList.splice(index, 1)
+          }
+
+        })
       } else {
         this.firebaseService.deleteFromFavorites(user, movieId, movieTitle, posterPath)
+
+        this.favorites.forEach((movie: any, index: any) => {
+          if (movie.movieId == movieId) {
+            this.favorites.splice(index, 1)
+          }
+
+        })
+
       }
     })
   }

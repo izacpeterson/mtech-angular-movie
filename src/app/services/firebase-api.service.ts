@@ -18,8 +18,6 @@ import { environment } from 'src/environments/environment';
 })
 export class FirebaseApiService {
 
-  // app: any;
-  // db: any;
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
 
@@ -27,18 +25,11 @@ export class FirebaseApiService {
   moviesRef: any;
   commentsRef: any;
 
-  constuctor() {}
+  constuctor() { }
 
 
   // initialize firebase app
   async init() {
-
-    // // only initialize app if app does not exist
-    // this.app = getApps().length ? getApp() : initializeApp(this.firebaseConfig);
-
-    // // database refrence
-    // this.db = getFirestore(this.app);
-
 
     // collection refrences
     this.usersRef = collection(this.db, 'users');
@@ -108,6 +99,18 @@ export class FirebaseApiService {
       favorites: arrayUnion(movieId)
     })
   }
+
+
+  async addToComments(movieId: string, username: any, comment: any) {
+    await updateDoc(doc(this.db, 'movies', movieId), {
+      comments: arrayUnion({
+        username: username,
+        comment: comment
+      })
+    })
+  }
+
+  calculateAverageRating(movieId: number) {
 
 
   async setPublicRating(movieId: string, rating: number) {

@@ -61,6 +61,17 @@ export class FavoritesComponent implements OnInit {
 
   }
 
+
+  deleteFromList(listName: 'watchlist' | 'favorites', movieId: number, movieTitle: string, posterPath: string) {
+    this.userService.getUID.subscribe((user) => {
+      if (listName === 'watchlist') {
+        this.firebaseService.deleteFromWatchlist(user, movieId, movieTitle, posterPath)
+      } else {
+        this.firebaseService.deleteFromFavorites(user, movieId, movieTitle, posterPath)
+      }
+    })
+  }
+
   test() {
     console.log(this.userData);
   }
@@ -77,5 +88,6 @@ export class FavoritesComponent implements OnInit {
 
   scrollToTop() {
     this.scroll.scrollToPosition([0, 0]);
+
   }
 }

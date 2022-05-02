@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { arrayUnion, doc, getFirestore, setDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-login',
@@ -95,11 +95,15 @@ export class LoginComponent implements OnInit {
         console.log(result.user);
         localStorage.setItem('loggedIn', 'true')
         //create user doc in firestore
-        this.userService.getUID.subscribe((user: any) => {
-          setDoc(doc(this.db, 'users', user), {
-            watchlist: [],
-            favorites: []
-          }, { merge: true })
+        this.userService.getUID.subscribe(async (user: any) => {
+          const docRef = (this.db, 'users', user)
+          const docSnap = await getDoc(docRef)
+          if (!(docSnap).exists()) {
+            setDoc(doc(this.db, 'users', user), {
+              watchlist: [],
+              favorites: []
+            }, { merge: true })
+          }
         });
         this.router.navigate(['search'])
         // ...

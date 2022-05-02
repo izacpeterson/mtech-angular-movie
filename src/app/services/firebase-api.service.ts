@@ -37,26 +37,25 @@ export class FirebaseApiService {
 
   // initialize firebase app
   async init() {  // note that some values may be uninitialized when referenced (async init)
-    // collection refrences
-    this.usersRef = collection(this.db, 'users');
-    this.moviesRef = collection(this.db, 'movies');
-    this.commentsRef = collection(this.db, 'comments');
+    // this.usersRef = collection(this.db, 'users');
+    // this.moviesRef = collection(this.db, 'movies');
+    // this.commentsRef = collection(this.db, 'comments');
+
+    this.addToComments('414906', 'test', 'sample comment');
 
     this.getComments('414906').then(comments => {
       console.log(comments);
     });
 
-    this.recalculatePublicRating('414906');
-
-    this.addToComments('414906', 'test', 'sample content');
+    this.getPublicRating('414906').then(rating => {
+      console.log(rating);
+    });
   }
 
 
   async getMovie(id: string) {
     const movie = await getDoc(doc(this.db, 'movies', id));
-    if (movie.exists())
-      return movie.data();
-    return undefined;
+    return movie?.data();
   }
 
   //
@@ -65,18 +64,14 @@ export class FirebaseApiService {
 
   async getUserById(id: string) {
     const user = await getDoc(doc(this.db, 'users', id));
-    if (user.exists())
-      return user.data();
-    return undefined;
+    return user?.data();
   }
 
   async getUserByHandle(handle: string) {
     const querySnapshot = await getDocs(
       query(this.usersRef, where('handle', '==', handle))
     );
-    if (querySnapshot.docs[0])
-      return querySnapshot.docs[0].data();
-    return undefined;
+    return querySnapshot.docs[0]?.data();
   }
 
 
@@ -152,12 +147,11 @@ export class FirebaseApiService {
   // return movie.comments array
   async getComments(movieId: string) {
     const movie = await this.getMovie(movieId);
-    if (movie)
-      return movie.comments;
-    return undefined;
+    return movie?.comments;
   }
 
   // append comment to movies.comments array
+  // will not append duplicate comments
   async addToComments(movieId: string, username: any, comment: any) {
     await updateDoc(doc(this.db, 'movies', movieId), {
       comments: arrayUnion({
@@ -173,18 +167,16 @@ export class FirebaseApiService {
 
   // return movie.rating
   async getPublicRating(movieId: string) {
-    const movie = await getDoc(doc(this.db, 'movies', movieId));
-    if (movie.exists())
-      return movie.data().ratings;
-    return undefined;
+    const movie = await this.getMovie(movieId);
+    // if (movie.exists())
+    return movie?.rating;
+    // return undefined;
   }
 
   // return movie.ratings array
   async getRatings(movieId: string) {
-    const movie = await getDoc(doc(this.db, 'movies', movieId));
-    if (movie.exists())
-      return movie.data().ratings;
-    return undefined;
+    const movie = await this.getMovie(movieId);
+    return movie?.ratings;
   }
 
   // set avg movie rating to custom value

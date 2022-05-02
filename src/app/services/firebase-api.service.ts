@@ -45,8 +45,40 @@ export class FirebaseApiService {
     this.getComments('438631').then(comments => {
       console.log(comments);
     });
+
+    this.recalculatePublicRating('414906');
   }
 
+
+  // async createMovieDoc(movieId: string) {
+  //   const docRef = doc(this.db, 'movies', movieId);
+  //   const docSnap = await getDoc(docRef);
+  //   if (!docSnap.exists()) {
+  //     setDoc(
+  //       docRef,
+  //       {
+  //         comments: [],
+  //         rating: undefined,
+  //         ratings: [],
+  //       },
+  //       { merge: true }
+  //     );
+  //   }
+  // }
+
+  async onMovieIfExists(id: string, cb: (movie: any) => void) {
+    const movie = await getDoc(doc(this.db, 'movies', id));
+    if (movie.exists()) {
+      cb(movie.data());
+    }
+  }
+
+  async getMovie(id: string) {
+    const movie = await getDoc(doc(this.db, 'movies', id));
+    if (movie.exists())
+      return movie.data();
+    return undefined;
+  }
 
   //
   // user search queries
@@ -54,9 +86,8 @@ export class FirebaseApiService {
 
   async getUserById(id: string) {
     const user = await getDoc(doc(this.db, 'users', id));
-    if (user.exists()) {
+    if (user.exists())
       return user.data();
-    }
     return undefined;
   }
 
@@ -64,9 +95,8 @@ export class FirebaseApiService {
     const querySnapshot = await getDocs(
       query(this.usersRef, where('handle', '==', handle))
     );
-    if (querySnapshot.docs[0]) {
+    if (querySnapshot.docs[0])
       return querySnapshot.docs[0].data();
-    }
     return undefined;
   }
 
@@ -141,11 +171,14 @@ export class FirebaseApiService {
   //
 
   // return movie.comments array
-  async getComments(movieId: string, limit: number = 20) {
-    const movie = await getDoc(doc(this.db, 'movies', movieId));
-    if (movie.exists()) {
-      return movie.data().comments;
-    }
+  async getComments(movieId: string) {
+    // return this.onMovieIfExists(movieId, movie => {
+    //   console.log(movie.comments);
+    //   return movie.comments;
+    // });
+    const movie = await this.getMovie(movieId);
+    if (movie)
+      return movie.comments;
     return undefined;
   }
 
@@ -163,16 +196,51 @@ export class FirebaseApiService {
   // ratings
   //
 
+  // return movie.rating
+  async getPublicRating(movieId: string) {
+    const movie = await getDoc(doc(this.db, 'movies', movieId));
+    if (movie.exists())
+      return movie.data().ratings;
+    return undefined;
+  }
+
+  // return movie.ratings array
+  async getRatings(movieId: string) {
+    const movie = await getDoc(doc(this.db, 'movies', movieId));
+    if (movie.exists())
+      return movie.data().ratings;
+    return undefined;
+  }
+
   // set avg movie rating to custom value
-  async setPublicRating(movieId: string, rating: number) {}
+  async setPublicRating(movieId: string, rating: number) {
+    await setDoc(
+      doc(this.db, 'movies', movieId),
+      {
+        rating: rating,
+      },
+      { merge: true }
+    );
+  }
 
-  // fetch all movie reviews and automatically set correct movie rating in database
-  async recalculatePublicRating(movieId: string) {}
+  // fetch all movie reviews and automatically set average movie rating
+  async recalculatePublicRating(movieId: string) {
+    this.getRatings(movieId).then(ratings => {
+      let sum = 0;
+      ratings.forEach((rating: number) => {
+        sum += rating;
+      });
+      const avgRating = sum / ratings.length;
+      this.setPublicRating(movieId, avgRating);
+    });
+  }
 
+  // append rating value to movie.ratings, update movie.rating
   async addRating(movieId: string, value: number) {
     await updateDoc(doc(this.db, 'movies', movieId), {
       ratings: arrayUnion(value),
     });
+    this.recalculatePublicRating(movieId);
   }
 
   async getRating(movieId: string, callback: Function) {

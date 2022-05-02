@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
         this.userService.getUID.subscribe(async (user: any) => {
           const docRef = (this.db, 'users', user)
           const docSnap = await getDoc(docRef)
-          if (!(docSnap).exists()) {
+          if (!docSnap.exists()) {
             setDoc(doc(this.db, 'users', user), {
               watchlist: [],
               favorites: []
@@ -134,6 +134,8 @@ export class LoginComponent implements OnInit {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorMessage);
+
         // ..
       });
   }

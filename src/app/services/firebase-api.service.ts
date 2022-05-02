@@ -170,9 +170,23 @@ export class FirebaseApiService {
   async recalculatePublicRating(movieId: string) {}
 
   async addRating(movieId: string, value: number) {
-    await updateDoc(doc(this.db, 'movies', movieId), {
-      ratings: arrayUnion(value),
-    });
+    const docRef = doc(this.db, 'movies', movieId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.data()?.ratings) {
+      let data = docSnap.data()?.ratings;
+      data.push(value);
+      console.log(data);
+      await setDoc(doc(this.db, 'movies', movieId), {
+        ratings: data,
+      });
+    } else {
+      let newArr = [];
+      newArr.push(value);
+      await setDoc(docRef, {
+        ratings: newArr,
+      });
+    }
   }
 
   async getRating(movieId: string, callback: Function) {

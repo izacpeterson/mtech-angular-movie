@@ -53,8 +53,11 @@ export class FavoritesComponent implements OnInit {
       this.currentUserId = user;
       this.firebaseService.getUserById(user).then((data: any) => {
         //this.userData = data;
-        this.watchList = data.watchlist;
-        this.favorites = data.favorites;
+        if (data) {
+          this.favorites = data.favorites;
+          this.watchList = data.watchlist;
+        }
+
         //console.log("DATA", this.userData);
       })
     })

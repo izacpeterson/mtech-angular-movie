@@ -123,16 +123,16 @@ export class SearchComponent implements OnInit {
     ).subscribe()
   }
 
-  addToWatchList(movieId: number) {
+  addToWatchList(movieId: number, posterPath: string, movieTitle: string) {
     this.userService.getUID.subscribe((user: any) => {
       console.log('inside function', user);
-      this.firebaseService.addToWatchList(movieId, user)
+      this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
     })
   }
-  addToFavorites(movieId: number) {
+  addToFavorites(movieId: number, posterPath: string, movieTitle: string) {
     this.userService.getUID.subscribe((user: any) => {
       console.log('inside function', user);
-      this.firebaseService.addToFavorites(movieId, user)
+      this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
     })
   }
 }

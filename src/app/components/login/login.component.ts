@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('loggedIn', 'true');
         //create user doc in firestore
         setDoc(
-          doc(this.db, 'users', user.uid),
+          doc(this.db, 'users', user.uid), {},
           { merge: true }
         );
 
@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit {
         const user = userCredential.user;
         localStorage.setItem('loggedIn', 'true');
         setDoc(
-          doc(this.db, 'users', user.uid),
+          doc(this.db, 'users', user.uid), {},
           { merge: true }
         );
         this.router.navigate(['search']);

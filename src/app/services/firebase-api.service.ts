@@ -36,16 +36,8 @@ export class FirebaseApiService {
   constuctor() {}
 
   // initialize firebase app
-  async init() {  // note that some values may be uninitialized when referenced (async init)
-    // this.usersRef = collection(this.db, 'users');
-    // this.moviesRef = collection(this.db, 'movies');
-    // this.commentsRef = collection(this.db, 'comments');
+  async init() {
 
-    this.addToComments('414906', 'test', 'sample comment');
-
-    this.getComments('414906').then(comments => {
-      console.log(comments);
-    });
   }
 
   async getMovie(id: string) {

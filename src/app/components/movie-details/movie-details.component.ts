@@ -177,7 +177,6 @@ export class MovieDetailsComponent implements OnInit {
     // initialize comments array
     this.firebaseService.getComments(this.movieId.toString()).then(comments => {
       this.comments = comments;
-      console.log(this.comments);
     });
 
   }

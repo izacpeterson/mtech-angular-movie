@@ -3,6 +3,9 @@
     <img [src]="imageURL + 'w342' + movie.poster_path" alt="" />
   </div>
   <div [ngClass]="XSmallScreen ? 'xsmall-right' : 'right'">
+    <button mat-button (click)="backClicked()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <h1>{{ movie.title }}</h1>
     <div class="subtitle-details">
       <p>{{ movieRating }}</p>
@@ -44,6 +47,12 @@
         </div>
       </div>
     </div>
+    <div class="saveButtons">
+      <button mat-raised-button (click)="addToFavorites(movieId, movie.poster_path, movie.title)">Add to
+        Favorites</button>
+      <button mat-raised-button (click)="addToWatchList(movieId, movie.poster_path, movie.title)">Add to Watch
+        List</button>
+    </div>
   </div>
 </div>
 
@@ -53,17 +62,8 @@
     <section *ngFor="let person of cast">
       <div class="card">
         <div class="imgContainer">
-          <img
-            *ngIf="person.profile_path"
-            [src]="imageURL + 'w185' + person.profile_path"
-            alt=""
-          />
-          <img
-            class="noPhoto"
-            *ngIf="!person.profile_path"
-            src="../../../assets/images/noCastPhoto.png"
-            alt=""
-          />
+          <img *ngIf="person.profile_path" [src]="imageURL + 'w185' + person.profile_path" alt="" />
+          <img class="noPhoto" *ngIf="!person.profile_path" src="../../../assets/images/noCastPhoto.png" alt="" />
 
           <!-- {{person.profile_path !== null ?
                     '<img src="https://image.tmdb.org/t/p/w185{{person.profile_path}}" alt="">'
@@ -80,15 +80,9 @@
   <h1>Official Trailer:</h1>
   <div class="trailers-flexbox">
     <div *ngFor="let movie of officialTrailers">
-      <iframe
-        width="350"
-        height="197"
-        [src]="movie"
-        title="YouTube video player"
-        frameborder="0"
+      <iframe width="350" height="197" [src]="movie" title="YouTube video player" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      >
+        allowfullscreen>
       </iframe>
     </div>
   </div>
@@ -111,12 +105,7 @@
   <div class="commentInput">
     <mat-form-field class="chat-form-field">
       <mat-label>Comment</mat-label>
-      <input
-        matInput
-        type="text"
-        [(ngModel)]="chatBar"
-        (keydown.enter)="sendChat()"
-      />
+      <input matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()" />
       <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
         <mat-icon>close</mat-icon>
       </button>

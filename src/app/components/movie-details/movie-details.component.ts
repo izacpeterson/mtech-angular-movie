@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { CastMember } from 'src/app/interfaces/cast-member';
@@ -60,7 +61,8 @@ export class MovieDetailsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private sanitizer: DomSanitizer,
     private userService: UserService,
-    private firebaseService: FirebaseApiService
+    private firebaseService: FirebaseApiService,
+    private location: Location,
   ) {
     breakpointObserver
       .observe([
@@ -199,8 +201,6 @@ export class MovieDetailsComponent implements OnInit {
       //link the firebase observable to 'chatList' to keep an updated list of chats
     }
 
-    //send 'filteredChat' through firebase
-    //link the firebase observable to 'chatList' to keep an updated list of chats
     this.userService.getUserName.subscribe((user) => {
       this.firebaseService.addToComments(
         this.movieId.toString(),
@@ -213,4 +213,22 @@ export class MovieDetailsComponent implements OnInit {
     this.firebaseService.addRating(this.movieId.toString(), value);
   }
   getRating() { }
+
+  addToWatchList(movieId: number, posterPath: any, movieTitle: any) {
+    this.userService.getUID.subscribe((user: any) => {
+      console.log('inside function', user);
+      this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
+    })
+  }
+
+  addToFavorites(movieId: number, posterPath: any, movieTitle: any) {
+    this.userService.getUID.subscribe((user: any) => {
+      console.log('inside function', user);
+      this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
+    })
+  }
+
+  backClicked() {
+    this.location.back();
+  }
 }

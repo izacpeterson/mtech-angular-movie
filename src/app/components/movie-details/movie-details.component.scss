@@ -180,16 +180,28 @@
     margin: 5px;
   }
 }
+
 .rateMovie {
   display: flex;
   align-items: center;
+
   p {
     display: flex;
     align-items: center;
   }
+
   button {
     background: none;
     color: white;
     border: none;
+  }
+}
+
+.saveButtons {
+
+  button {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.65);
+    margin-right: 5px;
   }
 }

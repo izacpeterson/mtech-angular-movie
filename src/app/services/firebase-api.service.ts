@@ -37,55 +37,41 @@ export class FirebaseApiService {
 
   // initialize firebase app
   async init() {
+    // note that some values may be uninitialized when referenced (async init)
     // collection refrences
     this.usersRef = collection(this.db, 'users');
     this.moviesRef = collection(this.db, 'movies');
     this.commentsRef = collection(this.db, 'comments');
 
-    getDocs(this.usersRef).then((querySnapshot) => {
-      console.log(querySnapshot);
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, ' => ', doc.data());
-      });
-      console.log('---');
+    this.getComments('438631').then((comments) => {
+      console.log(comments);
     });
-
-    this.getUserById('uVxllDLwVVrBjKNIGfub').then((data) => {
-      console.log(data);
-    });
-
-    this.getUserByHandle('johndoe');
   }
 
   //
-  // read queries
+  // user search queries
   //
 
   async getUserById(id: string) {
     const user = await getDoc(doc(this.db, 'users', id));
-    return user.data();
+    if (user.exists()) {
+      return user.data();
+    }
+    return undefined;
   }
-
-  async getCommentById(id: string) {
-    const comment = await getDoc(doc(this.db, 'comments', id));
-    return comment.data();
-  }
-
-  async getCommentsByMovieId(id: string) {}
-
-  async getRatingsByMovieId(id: string) {}
 
   async getUserByHandle(handle: string) {
     const querySnapshot = await getDocs(
       query(this.usersRef, where('handle', '==', handle))
     );
-    return querySnapshot.docs[0].data();
+    if (querySnapshot.docs[0]) {
+      return querySnapshot.docs[0].data();
+    }
+    return undefined;
   }
 
-  calculateAverageRating(movieId: number) {}
-
   //
-  // write queries
+  // watchlist/favorites
   //
 
   async addToWatchList(
@@ -118,17 +104,6 @@ export class FirebaseApiService {
     });
   }
 
-  async addToComments(movieId: string, username: any, comment: any) {
-    await updateDoc(doc(this.db, 'movies', movieId), {
-      comments: arrayUnion({
-        username: username,
-        comment: comment,
-      }),
-    });
-  }
-
-  async setPublicRating(movieId: string, rating: number) {}
-
   async deleteFromWatchlist(
     uid: any,
     movieId: number,
@@ -143,6 +118,7 @@ export class FirebaseApiService {
       }),
     });
   }
+
   async deleteFromFavorites(
     uid: any,
     movieId: number,
@@ -158,27 +134,83 @@ export class FirebaseApiService {
     });
   }
 
+  //
+  // comments
+  //
+
+  // return movie.comments array
+  async getComments(movieId: string, limit: number = 20) {
+    const movie = await getDoc(doc(this.db, 'movies', movieId));
+    if (movie.exists()) {
+      return movie.data().comments;
+    }
+    return undefined;
+  }
+
+  // append comment to movies.comments array
+  async addToComments(movieId: string, username: any, comment: any) {
+    await updateDoc(doc(this.db, 'movies', movieId), {
+      comments: arrayUnion({
+        username: username,
+        comment: comment,
+      }),
+    });
+  }
+
+  //
+  // ratings
+  //
+
+  // set avg movie rating to custom value
+  async setPublicRating(movieId: string, rating: number) {}
+
+  // fetch all movie reviews and automatically set correct movie rating in database
   async recalculatePublicRating(movieId: string) {}
 
   async addRating(movieId: string, value: number) {
-    await updateDoc(doc(this.db, 'movies', movieId), {
-      ratings: arrayUnion(value),
-    });
+    const docRef = doc(this.db, 'movies', movieId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.data()?.ratings) {
+      let data = docSnap.data()?.ratings;
+      data.push(value);
+      console.log(data);
+      await setDoc(doc(this.db, 'movies', movieId), {
+        ratings: data,
+      });
+    } else {
+      let newArr = [];
+      newArr.push(value);
+      await setDoc(docRef, {
+        ratings: newArr,
+      });
+    }
   }
+
   async getRating(movieId: string, callback: Function) {
     let average: number = 0;
     const docRef = doc(this.db, 'movies', movieId);
 
-    const docSnap = await getDoc(docRef);
+    // const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      let data = docSnap.data().ratings;
+    // if (docSnap.exists()) {
+    //   let data = docSnap.data().ratings;
+    //   let total = 0;
+    //   data.forEach((value: number) => {
+    //     total += value;
+    //   });
+    //   average = total / data.length;
+    //   callback(average);
+    // }
+
+    onSnapshot(docRef, (doc) => {
+      let data = doc.data()?.ratings;
       let total = 0;
       data.forEach((value: number) => {
         total += value;
       });
-      average = total / data.length;
+      average = Math.round(total / data.length);
       callback(average);
-    }
+    });
   }
 }

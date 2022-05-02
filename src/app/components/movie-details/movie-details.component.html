@@ -3,6 +3,9 @@
     <img [src]="imageURL + 'w342' + movie.poster_path" alt="" />
   </div>
   <div [ngClass]="XSmallScreen ? 'xsmall-right' : 'right'">
+    <button mat-button (click)="backClicked()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <h1>{{ movie.title }}</h1>
     <div class="subtitle-details">
       <p>{{ movieRating }}</p>
@@ -25,7 +28,7 @@
         <button mat-menu-item (click)="addRating(4)">4</button>
         <button mat-menu-item (click)="addRating(5)">5</button>
       </mat-menu>
-      <!-- <p>Your rating:</p> -->
+
     </div>
     <h2>{{ movie.tagline }}</h2>
     <p>{{ movie.overview }}</p>
@@ -49,6 +52,12 @@
           <p *ngFor="let writer of writers">{{ writer.name }}</p>
         </div>
       </div>
+    </div>
+    <div class="saveButtons">
+      <button mat-raised-button (click)="addToFavorites(movieId, movie.poster_path, movie.title)">Add to
+        Favorites</button>
+      <button mat-raised-button (click)="addToWatchList(movieId, movie.poster_path, movie.title)">Add to Watch
+        List</button>
     </div>
   </div>
 </div>

@@ -189,8 +189,10 @@
 
 .rateMovie {
   display: flex;
+
   align-items: flex-start;
   text-align: center;
+
 
   button {
     background: none;
@@ -202,5 +204,15 @@
 
   button:active {
     background-color: rgba(255, 255, 255, 0.566);
+  }
+}
+
+.saveButtons {
+
+  button {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.65);
+    margin-right: 5px;
+
   }
 }

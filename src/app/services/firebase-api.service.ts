@@ -36,17 +36,17 @@ export class FirebaseApiService {
   constuctor() {}
 
   // initialize firebase app
-  async init() {  // note that some values may be uninitialized when referenced (async init)
+  async init() {
+    // note that some values may be uninitialized when referenced (async init)
     // collection refrences
     this.usersRef = collection(this.db, 'users');
     this.moviesRef = collection(this.db, 'movies');
     this.commentsRef = collection(this.db, 'comments');
 
-    this.getComments('438631').then(comments => {
+    this.getComments('438631').then((comments) => {
       console.log(comments);
     });
   }
-
 
   //
   // user search queries
@@ -69,7 +69,6 @@ export class FirebaseApiService {
     }
     return undefined;
   }
-
 
   //
   // watchlist/favorites
@@ -135,7 +134,6 @@ export class FirebaseApiService {
     });
   }
 
-
   //
   // comments
   //
@@ -193,17 +191,26 @@ export class FirebaseApiService {
     let average: number = 0;
     const docRef = doc(this.db, 'movies', movieId);
 
-    const docSnap = await getDoc(docRef);
+    // const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      let data = docSnap.data().ratings;
+    // if (docSnap.exists()) {
+    //   let data = docSnap.data().ratings;
+    //   let total = 0;
+    //   data.forEach((value: number) => {
+    //     total += value;
+    //   });
+    //   average = total / data.length;
+    //   callback(average);
+    // }
+
+    onSnapshot(docRef, (doc) => {
+      let data = doc.data()?.ratings;
       let total = 0;
       data.forEach((value: number) => {
         total += value;
       });
-      average = total / data.length;
+      average = Math.round(total / data.length);
       callback(average);
-    }
+    });
   }
-
 }

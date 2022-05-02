@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ChatPipe } from 'src/app/pipes/chat.pipe';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
-import { setDoc, doc, getFirestore } from 'firebase/firestore';
+import { setDoc, doc, getFirestore, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 
@@ -160,19 +160,26 @@ export class MovieDetailsComponent implements OnInit {
     this.userService.getUserName.subscribe((name: any) => {
       this.chatName = name;
     });
-    setDoc(
-      doc(this.db, 'movies', this.movieId.toString()),
-      {
-        comments: [],
-      },
-      { merge: true }
-    );
 
     this.firebaseService.getRating(this.movieId.toString(), (data: number) => {
       // alert(data);
       this.userRating = data;
     });
     // console.log(this.movieRating);
+    this.createMovieDoc()
+  }
+  async createMovieDoc() {
+    const docRef = doc(this.db, 'movies', this.movieId.toString());
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      setDoc(
+        doc(this.db, 'movies', this.movieId.toString()),
+        {
+          comments: [],
+        },
+        { merge: true }
+      );
+    }
   }
 
   getImageUrl() {
@@ -205,5 +212,5 @@ export class MovieDetailsComponent implements OnInit {
   addRating(value: number) {
     this.firebaseService.addRating(this.movieId.toString(), value);
   }
-  getRating() {}
+  getRating() { }
 }

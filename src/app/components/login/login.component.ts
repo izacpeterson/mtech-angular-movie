@@ -98,7 +98,9 @@ export class LoginComponent implements OnInit {
         this.userService.getUID.subscribe(async (user: any) => {
           const docRef = (this.db, 'users', user)
           const docSnap = await getDoc(docRef)
-          if (!docSnap.exists()) {
+          if (docSnap.exists()) {
+            return
+          } else {
             setDoc(doc(this.db, 'users', user), {
               watchlist: [],
               favorites: []

@@ -166,6 +166,7 @@ export class MovieDetailsComponent implements OnInit {
       this.userRating = data;
     });
     // console.log(this.movieRating);
+    this.createMovieDoc()
   }
   async createMovieDoc() {
     const docRef = doc(this.db, 'movies', this.movieId.toString());
@@ -180,7 +181,6 @@ export class MovieDetailsComponent implements OnInit {
       );
     }
   }
-
 
   getImageUrl() {
     if (this.XSmallScreen === false) {

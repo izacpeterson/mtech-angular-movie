@@ -95,18 +95,9 @@ export class LoginComponent implements OnInit {
         console.log(result.user);
         localStorage.setItem('loggedIn', 'true');
         //create user doc in firestore
-        // this.userService.getUID.subscribe((user: any) => {
-        // const docRef = (this.db, 'users', user)
-        // // const docSnap = await getDoc(docRef)
-        // if ((await getDoc(docRef)).exists()) {
-        //   console.log("Document data:");
-        // } else {
-        //   console.log('document else statement');
-
         setDoc(doc(this.db, 'users', user.uid), {
         }, { merge: true });
-        // }
-        // });
+
         this.router.navigate(['search'])
         // ...
       })

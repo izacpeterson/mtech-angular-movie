@@ -46,12 +46,7 @@ export class FirebaseApiService {
     this.getComments('414906').then(comments => {
       console.log(comments);
     });
-
-    this.getPublicRating('414906').then(rating => {
-      console.log(rating);
-    });
   }
-
 
   async getMovie(id: string) {
     const movie = await getDoc(doc(this.db, 'movies', id));
@@ -73,7 +68,6 @@ export class FirebaseApiService {
     );
     return querySnapshot.docs[0]?.data();
   }
-
 
   //
   // watchlist/favorites
@@ -139,7 +133,6 @@ export class FirebaseApiService {
     });
   }
 
-
   //
   // comments
   //
@@ -168,9 +161,7 @@ export class FirebaseApiService {
   // return movie.rating
   async getPublicRating(movieId: string) {
     const movie = await this.getMovie(movieId);
-    // if (movie.exists())
     return movie?.rating;
-    // return undefined;
   }
 
   // return movie.ratings array
@@ -227,17 +218,26 @@ export class FirebaseApiService {
     let average: number = 0;
     const docRef = doc(this.db, 'movies', movieId);
 
-    const docSnap = await getDoc(docRef);
+    // const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      let data = docSnap.data().ratings;
+    // if (docSnap.exists()) {
+    //   let data = docSnap.data().ratings;
+    //   let total = 0;
+    //   data.forEach((value: number) => {
+    //     total += value;
+    //   });
+    //   average = total / data.length;
+    //   callback(average);
+    // }
+
+    onSnapshot(docRef, (doc) => {
+      let data = doc.data()?.ratings;
       let total = 0;
       data.forEach((value: number) => {
         total += value;
       });
-      average = total / data.length;
+      average = Math.round(total / data.length);
       callback(average);
-    }
+    });
   }
-
 }

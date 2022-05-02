@@ -16,10 +16,10 @@
 </mat-toolbar>
 
 <mat-toolbar *ngIf="XSmallScreen" class="toolbar">
-  <button mat-button routerLink="/" [matMenuTriggerFor]="menu">
+  <button mat-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <h1>WebFlix</h1>
+  <h1 routerLink="/">WebFlix</h1>
   <mat-menu #menu="matMenu">
     <span mat-menu-item>{{navName}}</span>
     <button mat-menu-item routerLink="/favorites">Favorites</button>

@@ -14,15 +14,21 @@
         <span *ngFor="let genre of movie.genres">{{ genre.name }}</span>
       </div>
       <p>{{ movie.runtime }} minutes</p>
-      <p>{{ userRating }}/5</p>
     </div>
+    <mat-progress-bar mode="determinate" [value]="ratingValue"></mat-progress-bar>
+    <p>{{ userRating }}/5</p>
     <div class="rateMovie">
-      <span>Your rating:</span>
-      <button (click)="addRating(1)">1</button>
-      <button (click)="addRating(2)">2</button>
-      <button (click)="addRating(3)">3</button>
-      <button (click)="addRating(4)">4</button>
-      <button (click)="addRating(5)">5</button>
+      <button [matMenuTriggerFor]="rating" matTooltip="Add Your Rating">
+        <mat-icon>star</mat-icon>
+      </button>
+      <mat-menu #rating="matMenu">
+        <button mat-menu-item (click)="addRating(1)">1</button>
+        <button mat-menu-item (click)="addRating(2)">2</button>
+        <button mat-menu-item (click)="addRating(3)">3</button>
+        <button mat-menu-item (click)="addRating(4)">4</button>
+        <button mat-menu-item (click)="addRating(5)">5</button>
+      </mat-menu>
+
     </div>
     <h2>{{ movie.tagline }}</h2>
     <p>{{ movie.overview }}</p>

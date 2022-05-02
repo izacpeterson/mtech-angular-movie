@@ -203,32 +203,43 @@
       text-align: left;
       margin: 5px;
       width: min(300px, 90vw);
-      // width: 100%;
 
       .handle {
         font-weight: 600;
         margin-bottom: 3px;
       }
+      .content {}
+    }
+  }
 
-      .content {
+  .commentInput {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    margin-bottom: 50px;
+    width: 350px;
 
-      }
+    .chat-form-field {
+      width: 100%;
+    }
+
+    textarea {
+      overflow-x: wrap;
+      min-height: 50px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    .post-button {
+      height: 40px;
+      width: 100%;
     }
   }
 
 }
 
-.commentInput {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-  padding-bottom: 50px;
-
-  button {
-    height: 40px;
-    margin: 5px;
-  }
-}
 
 
 

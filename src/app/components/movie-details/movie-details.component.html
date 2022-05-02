@@ -121,12 +121,16 @@
 
   <div class="commentInput">
     <mat-form-field class="chat-form-field">
-      <mat-label>Comment</mat-label>
-      <input matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()" />
-      <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
+      <mat-label>Leave a comment</mat-label>
+      <textarea
+        matInput type="text"
+        [(ngModel)]="chatBar"
+        (keydown.enter)="sendChat()"
+      ></textarea>
+      <!-- <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
         <mat-icon>close</mat-icon>
-      </button>
+      </button> -->
     </mat-form-field>
-    <button mat-raised-button (click)="sendChat()">Post</button>
+    <button class="post-button" mat-raised-button (click)="sendChat()">Post</button>
   </div>
 </div>

@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -23,6 +25,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LayoutModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -34,6 +38,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LayoutModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTooltipModule
   ],
 })
 export class MaterialModule { }

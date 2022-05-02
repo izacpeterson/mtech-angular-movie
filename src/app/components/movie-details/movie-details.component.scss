@@ -1,3 +1,5 @@
+@import '../../../styles.scss';
+
 .main-details {
   position: relative;
   width: 100%;
@@ -45,6 +47,10 @@
     span {
       margin-right: 0.5rem;
     }
+  }
+
+  mat-progress-bar {
+    color: $primary;
   }
 }
 
@@ -180,16 +186,21 @@
     margin: 5px;
   }
 }
+
 .rateMovie {
   display: flex;
-  align-items: center;
-  p {
-    display: flex;
-    align-items: center;
-  }
+  align-items: flex-start;
+  text-align: center;
+
   button {
     background: none;
     color: white;
     border: none;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  button:active {
+    background-color: rgba(255, 255, 255, 0.566);
   }
 }

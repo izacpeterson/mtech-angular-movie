@@ -41,7 +41,8 @@ export class MovieDetailsComponent implements OnInit {
   ];
   chatBar: string = '';
   chatName: string = '';
-  chatList: any = []; //{ user: 'user1', message: 'hi' }
+  chatList: any = []; //{ user: 'user1', message: 'hi' };
+  ratingValue: number = 0;
 
   app = initializeApp(environment.firebaseConfig);
   db = getFirestore(this.app);
@@ -164,6 +165,7 @@ export class MovieDetailsComponent implements OnInit {
     this.firebaseService.getRating(this.movieId.toString(), (data: number) => {
       // alert(data);
       this.userRating = data;
+      this.ratingValue = this.userRating * 20
     });
     // console.log(this.movieRating);
     this.createMovieDoc()

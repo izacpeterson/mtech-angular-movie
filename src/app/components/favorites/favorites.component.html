@@ -1,7 +1,7 @@
 <div class="rows">
     <div>
         <h1 class="rowTitle">Favorites:</h1>
-        <div class="movieContainer">
+        <div class="movieContainer" *ngIf="favorites">
             <div *ngFor="let movie of favorites">
                 <div class="customCard">
 
@@ -32,12 +32,17 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="!favorites">
+            <h3 style="text-align: center;">
+                Movies added to your Favorites will appear here.
+            </h3>
+        </div>
 
     </div>
 
     <div>
         <h1 class="rowTitle">Watch List:</h1>
-        <div class="movieContainer">
+        <div class="movieContainer" *ngIf="watchList">
             <div *ngFor="let movie of watchList">
                 <div class="customCard">
 
@@ -67,6 +72,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div *ngIf="!watchList">
+            <h3 style="text-align: center;">
+                Movies added to your Watch List will appear here.
+            </h3>
         </div>
 
     </div>

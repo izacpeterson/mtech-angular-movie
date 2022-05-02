@@ -103,17 +103,15 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('loggedIn', 'true');
         //create user doc in firestore
         this.userService.getUID.subscribe(async (user: any) => {
-          const docRef = (this.db, 'users', user);
-          const docSnap = await getDoc(docRef);
-          if (!docSnap.exists()) {
-            setDoc(
-              doc(this.db, 'users', user),
-              {
-                watchlist: [],
-                favorites: [],
-              },
-              { merge: true }
-            );
+          const docRef = (this.db, 'users', user)
+          const docSnap = await getDoc(docRef)
+          if (docSnap.exists()) {
+            return
+          } else {
+            setDoc(doc(this.db, 'users', user), {
+              watchlist: [],
+              favorites: []
+            }, { merge: true })
           }
         });
         this.router.navigate(['search']);
@@ -150,6 +148,7 @@ export class LoginComponent implements OnInit {
         const errorMessage = error.message;
         console.log(errorMessage);
 
+<<<<<<< HEAD
         signInWithEmailAndPassword(auth, this.email, this.password)
           .then((userCredential) => {
             const user = userCredential.user;
@@ -161,6 +160,8 @@ export class LoginComponent implements OnInit {
             console.log(error.message);
           });
 
+=======
+>>>>>>> master
         // ..
       });
   }

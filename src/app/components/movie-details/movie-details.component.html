@@ -16,8 +16,8 @@
       <p>{{ movie.runtime }} minutes</p>
     </div>
     <mat-progress-bar mode="determinate" [value]="ratingValue"></mat-progress-bar>
-    <p>{{ userRating }}/5</p>
-    <div class="rateMovie">
+    <h3>{{ userRating }}/5</h3>
+    <div class="movieButtons">
       <button [matMenuTriggerFor]="rating" matTooltip="Add Your Rating">
         <mat-icon>star</mat-icon>
       </button>
@@ -28,7 +28,12 @@
         <button mat-menu-item (click)="addRating(4)">4</button>
         <button mat-menu-item (click)="addRating(5)">5</button>
       </mat-menu>
-
+      <button (click)="addToFavorites(movieId, movie.poster_path, movie.title)" matTooltip="Add To Favorites">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button (click)="addToWatchList(movieId, movie.poster_path, movie.title)" matTooltip="Add To Watchlist">
+        <mat-icon>watch_later</mat-icon>
+      </button>
     </div>
     <h2>{{ movie.tagline }}</h2>
     <p>{{ movie.overview }}</p>
@@ -53,12 +58,8 @@
         </div>
       </div>
     </div>
-    <div class="saveButtons">
-      <button mat-raised-button (click)="addToFavorites(movieId, movie.poster_path, movie.title)">Add to
-        Favorites</button>
-      <button mat-raised-button (click)="addToWatchList(movieId, movie.poster_path, movie.title)">Add to Watch
-        List</button>
-    </div>
+    <!-- <div class="saveButtons">
+    </div> -->
   </div>
 </div>
 

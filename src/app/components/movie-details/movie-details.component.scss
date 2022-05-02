@@ -161,18 +161,42 @@
   flex-wrap: wrap;
 }
 
-.commentBox {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  max-height: 300px;
-  overflow: auto;
 
-  .comment {
+.commentContainer {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .commentBox {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
-    width: 300px;
+    overflow-x: wrap;
+    overflow-y: scroll;
+    width: min(350px, 100vw);
+    max-height: 300px;
+    padding: 20px;
+    border-top: 2px solid #dadfea;
+
+    .comment {
+      text-align: left;
+      margin: 5px;
+      width: min(300px, 90vw);
+      // width: 100%;
+
+      .handle {
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+
+      .content {
+
+      }
+    }
   }
+
 }
 
 .commentInput {

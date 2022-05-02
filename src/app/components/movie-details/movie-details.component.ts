@@ -43,6 +43,7 @@ export class MovieDetailsComponent implements OnInit {
   chatBar: string = '';
   chatName: string = '';
   chatList: any = []; //{ user: 'user1', message: 'hi' };
+  comments: any = [];
   ratingValue: number = 0;
 
   app = initializeApp(environment.firebaseConfig);
@@ -90,6 +91,7 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.route.params
       .pipe(switchMap((params) => (this.movieId = params['id'])))
       .subscribe();
@@ -167,11 +169,20 @@ export class MovieDetailsComponent implements OnInit {
     this.firebaseService.getRating(this.movieId.toString(), (data: number) => {
       // alert(data);
       this.userRating = data;
-      this.ratingValue = this.userRating * 20
+      this.ratingValue = this.userRating * 20;
     });
     // console.log(this.movieRating);
-    this.createMovieDoc()
+    this.createMovieDoc();
+
+    // initialize comments array
+    this.firebaseService.getComments(this.movieId.toString()).then(comments => {
+      this.comments = comments;
+      console.log(this.comments);
+    });
+
   }
+
+
   async createMovieDoc() {
     const docRef = doc(this.db, 'movies', this.movieId.toString());
     const docSnap = await getDoc(docRef);
@@ -197,7 +208,8 @@ export class MovieDetailsComponent implements OnInit {
   sendChat() {
     let filteredChat = new ChatPipe().transform(this.chatBar);
     if (filteredChat) {
-      this.chatList.push({ username: this.chatName, comment: filteredChat });
+      // this.chatList.push({ username: this.chatName, comment: filteredChat });
+      this.comments.push({ username: this.chatName, comment: filteredChat });
       this.chatBar = '';
       //send 'filteredChat' through firebase
       //link the firebase observable to 'chatList' to keep an updated list of chats

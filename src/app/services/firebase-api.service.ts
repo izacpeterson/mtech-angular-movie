@@ -42,36 +42,15 @@ export class FirebaseApiService {
     this.moviesRef = collection(this.db, 'movies');
     this.commentsRef = collection(this.db, 'comments');
 
-    this.getComments('438631').then(comments => {
+    this.getComments('414906').then(comments => {
       console.log(comments);
     });
 
     this.recalculatePublicRating('414906');
+
+    this.addToComments('414906', 'test', 'sample content');
   }
 
-
-  // async createMovieDoc(movieId: string) {
-  //   const docRef = doc(this.db, 'movies', movieId);
-  //   const docSnap = await getDoc(docRef);
-  //   if (!docSnap.exists()) {
-  //     setDoc(
-  //       docRef,
-  //       {
-  //         comments: [],
-  //         rating: undefined,
-  //         ratings: [],
-  //       },
-  //       { merge: true }
-  //     );
-  //   }
-  // }
-
-  async onMovieIfExists(id: string, cb: (movie: any) => void) {
-    const movie = await getDoc(doc(this.db, 'movies', id));
-    if (movie.exists()) {
-      cb(movie.data());
-    }
-  }
 
   async getMovie(id: string) {
     const movie = await getDoc(doc(this.db, 'movies', id));
@@ -172,10 +151,6 @@ export class FirebaseApiService {
 
   // return movie.comments array
   async getComments(movieId: string) {
-    // return this.onMovieIfExists(movieId, movie => {
-    //   console.log(movie.comments);
-    //   return movie.comments;
-    // });
     const movie = await this.getMovie(movieId);
     if (movie)
       return movie.comments;
@@ -237,10 +212,23 @@ export class FirebaseApiService {
 
   // append rating value to movie.ratings, update movie.rating
   async addRating(movieId: string, value: number) {
-    await updateDoc(doc(this.db, 'movies', movieId), {
-      ratings: arrayUnion(value),
-    });
-    this.recalculatePublicRating(movieId);
+    const docRef = doc(this.db, 'movies', movieId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.data()?.ratings) {
+      let data = docSnap.data()?.ratings;
+      data.push(value);
+      console.log(data);
+      await setDoc(doc(this.db, 'movies', movieId), {
+        ratings: data,
+      });
+    } else {
+      let newArr = [];
+      newArr.push(value);
+      await setDoc(docRef, {
+        ratings: newArr,
+      });
+    }
   }
 
   async getRating(movieId: string, callback: Function) {

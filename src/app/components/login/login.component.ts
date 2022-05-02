@@ -6,12 +6,19 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { arrayUnion, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from 'firebase/firestore';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +28,7 @@ import { arrayUnion, doc, getDoc, getFirestore, setDoc } from 'firebase/firestor
 export class LoginComponent implements OnInit {
   app = initializeApp(environment.firebaseConfig);
   auth = getAuth(this.app);
-  db = getFirestore(this.app)
+  db = getFirestore(this.app);
 
   googleLogin: boolean = true;
   currentScreenSize: string = '';
@@ -99,6 +106,7 @@ export class LoginComponent implements OnInit {
         }, { merge: true });
 
         this.router.navigate(['search'])
+
         // ...
       })
       .catch((error) => {
@@ -118,16 +126,30 @@ export class LoginComponent implements OnInit {
     createUserWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
         // Signed in
+        console.log('created');
+
         const user = userCredential.user;
         localStorage.setItem('loggedIn', 'true');
 
         this.router.navigate(['search']);
+
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
+
+        signInWithEmailAndPassword(auth, this.email, this.password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            localStorage.setItem('loggedIn', 'true');
+
+            this.router.navigate(['search']);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
 
         // ..
       });
@@ -142,4 +164,3 @@ export class LoginComponent implements OnInit {
 function movieId(movieId: any): any {
   throw new Error('Function not implemented.');
 }
-

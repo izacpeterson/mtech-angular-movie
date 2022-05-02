@@ -99,12 +99,22 @@
 </div>
 
 <div class="commentContainer">
-  <h1 style="text-align: center">Comments:</h1>
+  <h1 class="comments-header" style="text-align: center">Comments</h1>
 
   <div class="commentBox">
-    <div *ngFor="let message of chatList">
+    <!-- <div *ngFor="let message of chatList">
       <mat-card class="comment">
         <h3>{{ message.username }}: {{ message.comment }}</h3>
+      </mat-card>
+    </div> -->
+    <div class="container" *ngFor="let comment of comments">
+      <mat-card class="comment">
+        <div class="handle">
+          {{ comment.username }}
+        </div>
+        <div class="content">
+          {{ comment.comment }}
+        </div>
       </mat-card>
     </div>
   </div>
@@ -117,6 +127,6 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button (click)="sendChat()">Send</button>
+    <button mat-raised-button (click)="sendChat()">Post</button>
   </div>
 </div>

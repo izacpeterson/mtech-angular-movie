@@ -186,10 +186,21 @@
   p {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
   button {
     background: none;
     color: white;
-    border: none;
+    border: 1px white solid;
+    transition: 0.2s;
+    margin: 1px;
+  }
+  :focus {
+    transform: scale(1.1);
+    background-color: white;
+    color: black;
+  }
+  :hover {
+    background-color: grey;
   }
 }

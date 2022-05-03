@@ -172,28 +172,17 @@ export class MovieDetailsComponent implements OnInit {
       this.ratingValue = this.userRating * 20;
     });
     // console.log(this.movieRating);
-    this.createMovieDoc();
+    setDoc(
+      doc(this.db, 'movies', this.movieId.toString()),
+      {},
+      { merge: true }
+    );
 
     // initialize comments array
     this.firebaseService.getComments(this.movieId.toString()).then(comments => {
       this.comments = comments;
     });
 
-  }
-
-
-  async createMovieDoc() {
-    const docRef = doc(this.db, 'movies', this.movieId.toString());
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      setDoc(
-        doc(this.db, 'movies', this.movieId.toString()),
-        {
-          comments: [],
-        },
-        { merge: true }
-      );
-    }
   }
 
   getImageUrl() {

@@ -64,7 +64,7 @@ export class NavbarComponent implements OnInit {
   }
   backButtonEnabled(): boolean {
     const path = this.location.path();
-    if (path === "/search" || path === "/login") {
+    if (path === "/search" || path === "/login" || path === "") {
       return false;
     }
     return true;

@@ -4,14 +4,16 @@
     <div class="back-button-container">
       <button
         mat-button
+        class="back-button-enabled"
         (click)="backClicked()"
         *ngIf="backButtonEnabled()">
         <mat-icon>arrow_back</mat-icon>
       </button>
       <button
         mat-button
+        class="back-button-disabled"
         *ngIf="!backButtonEnabled()"
-        style="color: #999; cursor: default">
+        style="color: #aaa; cursor: default">
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
@@ -49,14 +51,16 @@
     <div class="back-button-container">
       <button
         mat-button
+        class="back-button-enabled"
         (click)="backClicked()"
         *ngIf="backButtonEnabled()">
         <mat-icon>arrow_back</mat-icon>
       </button>
       <button
         mat-button
+        class="back-button-disabled"
         *ngIf="!backButtonEnabled()"
-        style="color: #999; cursor: default">
+        style="color: #aaa; cursor: default">
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>

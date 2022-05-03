@@ -20,7 +20,6 @@ import {
   getFirestore,
   setDoc,
 } from 'firebase/firestore';
-import { Console } from 'console';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
 
   googleLogin: boolean = true;
   emailSignUp: boolean = false;
-  username: string = ''
 
   currentScreenSize: string = '';
   XSmallScreen: boolean = false;
@@ -127,9 +125,10 @@ export class LoginComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error.message);
+        this.signUp();
       });
   }
-  emailSignUp() {
+  signUp() {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
@@ -140,15 +139,17 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('loggedIn', 'true');
         setDoc(doc(this.db, 'users', user.uid), {}, { merge: true });
 
-        updateProfile(auth.currentUser, {
-          displayName: this.username,
-        })
-          .then(() => {
-            console.log('Username Set');
+        if (auth.currentUser) {
+          updateProfile(auth.currentUser, {
+            displayName: this.username,
           })
-          .catch((error) => {
-            console.log(error);
-          });
+            .then(() => {
+              console.log('Username Set');
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
 
         this.router.navigate(['search']);
 

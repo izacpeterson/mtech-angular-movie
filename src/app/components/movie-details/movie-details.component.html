@@ -84,54 +84,52 @@
   </div>
 </div>
 
-<div class="trailerContainer">
-  <h1>Official Trailer:</h1>
-  <div class="trailers-flexbox">
-    <div *ngFor="let movie of officialTrailers">
-      <iframe width="350" height="197" [src]="movie" title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+<div class="trailer-and-comments" [ngClass]="!smallScreen ? 'trailer-comments-flex' : 'none'">
+  <div class="trailerContainer">
+    <h1>Official Trailer:</h1>
+    <div class="trailers-flexbox">
+      <div *ngFor="let movie of officialTrailers">
+        <iframe width="350" height="197" [src]="movie" title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <div *ngIf="officialTrailers.length == 0">
+      <h2>No Official Trailers</h2>
     </div>
   </div>
-  <div *ngIf="officialTrailers.length == 0">
-    <h2>No Official Trailers</h2>
-  </div>
-</div>
 
-<div class="commentContainer">
-  <h1 class="comments-header" style="text-align: center">Comments</h1>
+  <div class="commentContainer">
+    <h1 class="comments-header" style="text-align: center">Comments</h1>
 
-  <div class="commentBox">
-    <!-- <div *ngFor="let message of chatList">
+    <div class="commentBox">
+      <!-- <div *ngFor="let message of chatList">
       <mat-card class="comment">
         <h3>{{ message.username }}: {{ message.comment }}</h3>
       </mat-card>
     </div> -->
-    <div class="container" *ngFor="let comment of comments">
-      <mat-card class="comment">
-        <div class="handle">
-          {{ comment.username }}
-        </div>
-        <div class="content">
-          {{ comment.comment }}
-        </div>
-      </mat-card>
+      <div class="container" *ngFor="let comment of comments">
+        <mat-card class="comment">
+          <div class="handle">
+            {{ comment.username }}
+          </div>
+          <div class="content">
+            {{ comment.comment }}
+          </div>
+        </mat-card>
+      </div>
     </div>
-  </div>
 
-  <div class="commentInput">
-    <mat-form-field class="chat-form-field">
-      <mat-label>Leave a comment</mat-label>
-      <textarea
-        matInput type="text"
-        [(ngModel)]="chatBar"
-        (keydown.enter)="sendChat()"
-      ></textarea>
-      <!-- <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
+    <div class="commentInput">
+      <mat-form-field class="chat-form-field">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput type="text" [(ngModel)]="chatBar" (keydown.enter)="sendChat()"></textarea>
+        <!-- <button *ngIf="chatBar" matSuffix mat-icon-button (click)="chatBar = ''">
         <mat-icon>close</mat-icon>
       </button> -->
-    </mat-form-field>
-    <button class="post-button" mat-raised-button (click)="sendChat()">Post</button>
+      </mat-form-field>
+      <button class="post-button" mat-raised-button (click)="sendChat()">Post</button>
+    </div>
   </div>
 </div>

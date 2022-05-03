@@ -13,7 +13,6 @@ import { SearchComponent } from './components/search/search.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { FirebaseTestComponent } from './firebase-test/firebase-test.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ChatPipe } from './pipes/chat.pipe';
@@ -46,4 +45,4 @@ import { ChatPipe } from './pipes/chat.pipe';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

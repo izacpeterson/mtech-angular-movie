@@ -42,7 +42,7 @@ export class MovieDetailsComponent implements OnInit {
   ];
   chatBar: string = '';
   chatName: string = '';
-  chatList: any = []; //{ user: 'user1', message: 'hi' };
+  // chatList: any = []; //{ user: 'user1', message: 'hi' };
   comments: any = [];
   ratingValue: number = 0;
 
@@ -241,7 +241,7 @@ export class MovieDetailsComponent implements OnInit {
     })
   }
 
-  backClicked() {
-    this.location.back();
-  }
+  // backClicked() {
+  //   this.location.back();
+  // }
 }

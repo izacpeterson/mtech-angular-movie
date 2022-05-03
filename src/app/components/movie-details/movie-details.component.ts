@@ -32,6 +32,7 @@ export class MovieDetailsComponent implements OnInit {
   directors: CrewMember[] = [];
   currentScreenSize: string = '';
   XSmallScreen: boolean = false;
+  smallScreen: boolean = false;
   videos: any;
   officialTrailers: any = [];
   trailerTitles: any = [
@@ -85,8 +86,12 @@ export class MovieDetailsComponent implements OnInit {
         }
         if (this.currentScreenSize === 'XSmall') {
           this.XSmallScreen = true;
+        } else if (this.currentScreenSize === 'Small') {
+          this.XSmallScreen = false;
+          this.smallScreen = true
         } else {
           this.XSmallScreen = false;
+          this.smallScreen = false;
         }
       });
   }

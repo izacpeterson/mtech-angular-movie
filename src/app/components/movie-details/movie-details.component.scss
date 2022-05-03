@@ -174,13 +174,17 @@
 
 .trailerContainer {
   text-align: center;
-  margin: 20px 0 20px 0;
+  margin-top: 20px;
 }
 
 .trailers-flexbox {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+
+  iframe {
+    margin: 0 5px;
+  }
 }
 
 
@@ -188,6 +192,7 @@
 
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
   align-items: center;
 
   .commentBox {
@@ -243,15 +248,6 @@
 
 }
 
-
-
-
-// .saveButtons {
-
-//   button {
-//     color: white;
-//     background-color: rgba(0, 0, 0, 0.65);
-//     margin-right: 5px;
-
-//   }
-// }
+.trailer-comments-flex {
+  display: flex;
+}

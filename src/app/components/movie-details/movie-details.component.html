@@ -16,7 +16,8 @@
       <p>{{ movie.runtime }} minutes</p>
     </div>
     <mat-progress-bar mode="determinate" [value]="ratingValue"></mat-progress-bar>
-    <h3>{{ userRating }}/5</h3>
+    <h3>{{ userRatingString }}</h3>
+    <!-- <h3>{{ userRating }}/5</h3> -->
     <div class="movieButtons">
       <button [matMenuTriggerFor]="rating" matTooltip="Add Your Rating">
         <mat-icon>star</mat-icon>

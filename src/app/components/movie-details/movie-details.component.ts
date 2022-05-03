@@ -27,6 +27,7 @@ export class MovieDetailsComponent implements OnInit {
   imageURL: string = `https://image.tmdb.org/t/p/`;
   movieRating: string = '';
   userRating: number = 0;
+  userRatingString: string = "";
   cast: CastMember[] = [];
   writers: CrewMember[] = [];
   directors: CrewMember[] = [];
@@ -168,8 +169,10 @@ export class MovieDetailsComponent implements OnInit {
     });
 
     this.firebaseService.getRating(this.movieId.toString(), (data: number) => {
-      // alert(data);
       this.userRating = data;
+      this.userRatingString = !isNaN(this.userRating) ?
+        `${this.userRating}/5` :
+        "No ratings yet";
       this.ratingValue = this.userRating * 20;
     });
     // console.log(this.movieRating);

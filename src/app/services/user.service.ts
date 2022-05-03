@@ -20,10 +20,8 @@ export class UserService {
     let uid = '';
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        console.log(user);
         uid = user.uid;
         subscriber.next(uid);
-        console.log(uid);
         localStorage.setItem('loggedIn', 'true')
       } else {
         // User is signed out

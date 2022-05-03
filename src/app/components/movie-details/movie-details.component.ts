@@ -101,7 +101,6 @@ export class MovieDetailsComponent implements OnInit {
       .pipe(
         map((res: any) => {
           this.movie = res;
-          // console.log('movie info', this.movie);
         })
       )
       .subscribe();
@@ -109,13 +108,11 @@ export class MovieDetailsComponent implements OnInit {
       .getExtendedMovieDetails(this.movieId, 'release_dates')
       .pipe(
         map((res: any) => {
-          // console.log('release dates', res);
           res.results.forEach((result: any) => {
             if (result.iso_3166_1 === 'US') {
               this.movieRating = result.release_dates[0].certification;
             }
           });
-          // console.log('rating', this.movieRating);
         })
       )
       .subscribe();
@@ -125,8 +122,6 @@ export class MovieDetailsComponent implements OnInit {
       .pipe(
         map((res: any) => {
           this.cast = res.cast;
-          // console.log('TEST', this.cast);
-          // this.crew = res.crew;
           res.crew.forEach((crewMember: any) => {
             if (crewMember.job === 'Director') {
               this.directors.push(crewMember);
@@ -134,9 +129,6 @@ export class MovieDetailsComponent implements OnInit {
               this.writers.push(crewMember);
             }
           });
-          // console.log('crew', res.crew);
-          // console.log('directors', this.directors);
-          // console.log('writers', this.writers);
         })
       )
       .subscribe();
@@ -146,12 +138,10 @@ export class MovieDetailsComponent implements OnInit {
       .pipe(
         map((res: any) => {
           this.videos = res.results;
-          //console.log('VIDEOS', this.videos);
           this.videos.forEach((video: any) => {
             if (
               this.trailerTitles.some((str: any) => video.name.includes(str))
             ) {
-              //video.name.includes('Official Trailer')
               this.officialTrailers.push(
                 this.sanitizer.bypassSecurityTrustResourceUrl(
                   `https://www.youtube.com/embed/${video.key}`
@@ -172,7 +162,6 @@ export class MovieDetailsComponent implements OnInit {
       this.userRating = data;
       this.ratingValue = this.userRating * 20;
     });
-    // console.log(this.movieRating);
     setDoc(
       doc(this.db, 'movies', this.movieId.toString()),
       {},
@@ -197,7 +186,6 @@ export class MovieDetailsComponent implements OnInit {
   sendChat() {
     let filteredChat = new ChatPipe().transform(this.chatBar);
     if (filteredChat) {
-      // this.chatList.push({ username: this.chatName, comment: filteredChat });
       this.comments.push({ username: this.chatName, comment: filteredChat });
       this.chatBar = '';
       //send 'filteredChat' through firebase

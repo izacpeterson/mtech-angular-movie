@@ -191,7 +191,7 @@ export class MovieDetailsComponent implements OnInit {
   sendChat() {
     let filteredChat = new ChatPipe().transform(this.chatBar);
     if (filteredChat) {
-      this.comments.push({ username: this.chatName, comment: filteredChat });
+      this.comments.unshift({ username: this.chatName, comment: filteredChat });
       this.chatBar = '';
       //send 'filteredChat' through firebase
       //link the firebase observable to 'chatList' to keep an updated list of chats

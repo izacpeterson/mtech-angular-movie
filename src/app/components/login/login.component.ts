@@ -76,7 +76,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserEmail.subscribe((email) => {
-      //console.log(email);
     });
   }
 
@@ -95,7 +94,6 @@ export class LoginComponent implements OnInit {
         const token = credential!.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(result.user);
         localStorage.setItem('loggedIn', 'true');
         //create user doc in firestore
         setDoc(doc(this.db, 'users', user.uid), {}, { merge: true });
@@ -133,7 +131,6 @@ export class LoginComponent implements OnInit {
     createUserWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
         // Signed in
-        console.log('created');
 
         const user = userCredential.user;
         localStorage.setItem('loggedIn', 'true');

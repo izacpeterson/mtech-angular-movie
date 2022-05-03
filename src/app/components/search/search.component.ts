@@ -5,6 +5,7 @@ import { map, take } from 'rxjs';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FirebaseApiService } from 'src/app/services/firebase-api.service';
 import { UserService } from 'src/app/services/user.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-search',
@@ -44,13 +45,47 @@ export class SearchComponent implements OnInit {
   showScrollBtn: boolean = false;
   hasSearched: boolean = false;
 
+  currentScreenSize: string = '';
+  XSmallScreen: boolean = false;
+
+  displayNameMap = new Map([
+    [Breakpoints.XSmall, 'XSmall'],
+    [Breakpoints.Small, 'Small'],
+    [Breakpoints.Medium, 'Medium'],
+    [Breakpoints.Large, 'Large'],
+    [Breakpoints.XLarge, 'XLarge'],
+  ]);
 
   constructor(
     private apiService: ApiService,
     private scroll: ViewportScroller,
     private firebaseService: FirebaseApiService,
     private userService: UserService,
-  ) { }
+    private breakpointObserver: BreakpointObserver
+  ) {
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe()
+      .subscribe((result) => {
+        for (const query of Object.keys(result.breakpoints)) {
+          if (result.breakpoints[query]) {
+            this.currentScreenSize =
+              this.displayNameMap.get(query) ?? 'Unknown';
+          }
+        }
+        if (this.currentScreenSize === 'XSmall') {
+          this.XSmallScreen = true;
+        } else {
+          this.XSmallScreen = false;
+        }
+      });
+  }
 
   ngOnInit(): void {
     //gets a list of movies when the page loads

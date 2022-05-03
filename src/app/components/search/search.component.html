@@ -11,8 +11,7 @@
 
 <div class="movieContainer" *ngIf="!loading && hasResults">
     <div *ngFor="let movie of displayedMovies">
-        <div class="customCard">
-
+        <div *ngIf="!XSmallScreen" class="customCard">
             <div class="header">
                 <div class="title">{{movie.title}}</div>
                 <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
@@ -33,12 +32,39 @@
                     </button>
                 </mat-menu>
             </div>
-
             <div class="clickArea" routerLink="/details/{{movie.id}}">
                 <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}"
                     alt="Poster">
                 <img *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png" alt="Poster"
                     [ngStyle]="{'width': '185px', 'height': '279px'}">
+            </div>
+        </div>
+        <div *ngIf="XSmallScreen" class="customCard">
+            <div class="header">
+                <div class="title">{{movie.title}}</div>
+                <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="addToFavorites(movie.id, movie.poster_path, movie.title)">
+                        <mat-icon>favorite</mat-icon>
+                        <span>Add to Favorites</span>
+                    </button>
+                    <button mat-menu-item (click)="addToWatchList(movie.id, movie.poster_path, movie.title)">
+                        <mat-icon>watch_later</mat-icon>
+                        <span>Add to Watch List</span>
+                    </button>
+                    <button mat-menu-item routerLink="/details/{{movie.id}}">
+                        <mat-icon>info</mat-icon>
+                        <span>View Details</span>
+                    </button>
+                </mat-menu>
+            </div>
+            <div class="clickArea" routerLink="/details/{{movie.id}}">
+                <img *ngIf="movie.backdrop_path" mat-image src="https://image.tmdb.org/t/p/w154{{movie.poster_path}}"
+                    alt="Poster">
+                <img *ngIf="!movie.backdrop_path" mat-image src="../../../assets/images/noPoster.png" alt="Poster"
+                    [ngStyle]="{'width': '154px', 'height': '232px'}">
             </div>
         </div>
     </div>

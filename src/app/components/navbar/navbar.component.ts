@@ -1,5 +1,7 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -23,6 +25,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private userService: UserService,
     private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private location: Location,
   ) {
     breakpointObserver
       .observe([
@@ -54,4 +58,16 @@ export class NavbarComponent implements OnInit {
   logOutUser() {
     this.userService.logOutUser()
   }
+
+  backClicked() {
+    this.location.back();
+  }
+  backButtonEnabled(): boolean {
+    const path = this.location.path();
+    if (path === "/search" || path === "/login" || path === "") {
+      return false;
+    }
+    return true;
+  }
+
 }

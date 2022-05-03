@@ -1,10 +1,36 @@
 @import '../../../styles.scss';
 
+$back_button_width: 50px;
+
 .toolbar {
     background-color: $primary;
     color: white;
+
+    .left, .right {
+        display: flex;
+        align-items: center;
+    }
+    .back-button-container, .right-spacer {
+        width: $back_button_width;
+    }
 }
 
-.spacer {
-    flex: 1 1 auto;
+.toolbar.large {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.toolbar.small {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .right-justify {
+        display: flex;
+        align-items: center;
+    }
+}
+
+// .spacer {
+//     flex: 1 1 auto;
+// }

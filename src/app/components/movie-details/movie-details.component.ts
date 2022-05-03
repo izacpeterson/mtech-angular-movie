@@ -43,7 +43,7 @@ export class MovieDetailsComponent implements OnInit {
   ];
   chatBar: string = '';
   chatName: string = '';
-  chatList: any = []; //{ user: 'user1', message: 'hi' };
+  // chatList: any = []; //{ user: 'user1', message: 'hi' };
   comments: any = [];
   ratingValue: number = 0;
 
@@ -170,7 +170,9 @@ export class MovieDetailsComponent implements OnInit {
 
     // initialize comments array
     this.firebaseService.getComments(this.movieId.toString()).then(comments => {
-      this.comments = comments;
+      if (comments) {
+        this.comments = comments;
+      }
     });
 
   }
@@ -217,7 +219,7 @@ export class MovieDetailsComponent implements OnInit {
     })).subscribe()
   }
 
-  backClicked() {
-    this.location.back();
-  }
+  // backClicked() {
+  //   this.location.back();
+  // }
 }

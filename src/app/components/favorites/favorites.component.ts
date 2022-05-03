@@ -88,9 +88,6 @@ export class FavoritesComponent implements OnInit {
     }
   }
 
-  test() {
-    console.log(this.userData);
-  }
 
   @HostListener('window:scroll', ['$event'])
   getScrollHeight() {

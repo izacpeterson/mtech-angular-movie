@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, take } from 'rxjs';
 import { CastMember } from 'src/app/interfaces/cast-member';
 import { CrewMember } from 'src/app/interfaces/crew-member';
 import { MovieDetails } from 'src/app/interfaces/movie-details';
@@ -21,6 +21,7 @@ import { FirebaseApiService } from 'src/app/services/firebase-api.service';
   styleUrls: ['./movie-details.component.scss'],
 })
 export class MovieDetailsComponent implements OnInit {
+  userId: string = '';
   movieId: number = 0;
   movie: MovieDetails = {};
   imageURL: string = `https://image.tmdb.org/t/p/`;
@@ -228,17 +229,17 @@ export class MovieDetailsComponent implements OnInit {
   getRating() { }
 
   addToWatchList(movieId: number, posterPath: any, movieTitle: any) {
-    this.userService.getUID.subscribe((user: any) => {
-      console.log('inside function', user);
+    this.userService.getUID.pipe(take(1), map((user: any) => {
+      console.log('USER', user);
       this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
-    })
+    })).subscribe()
   }
 
   addToFavorites(movieId: number, posterPath: any, movieTitle: any) {
-    this.userService.getUID.subscribe((user: any) => {
-      console.log('inside function', user);
+    this.userService.getUID.pipe(take(1), map((user: any) => {
+      console.log('USER', user);
       this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
-    })
+    })).subscribe()
   }
 
   backClicked() {

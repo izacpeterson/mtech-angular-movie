@@ -60,7 +60,6 @@
 
 .movieButtons {
   display: flex;
-  // align-items: flex-start;
   justify-content: space-between;
   width: 30%;
 
@@ -70,6 +69,10 @@
     border: none;
     cursor: pointer;
     border-radius: 50px;
+
+    :active {
+      color: $primary
+    }
   }
 }
 
@@ -209,7 +212,6 @@
         margin-bottom: 3px;
       }
 
-      .content {}
     }
   }
 

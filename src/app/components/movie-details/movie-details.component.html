@@ -3,9 +3,9 @@
     <img [src]="imageURL + 'w342' + movie.poster_path" alt="" />
   </div>
   <div [ngClass]="XSmallScreen ? 'xsmall-right' : 'right'">
-    <button mat-button (click)="backClicked()">
+    <!-- <button mat-button (click)="backClicked()">
       <mat-icon>arrow_back</mat-icon>
-    </button>
+    </button> -->
     <h1>{{ movie.title }}</h1>
     <div class="subtitle-details">
       <p>{{ movieRating }}</p>

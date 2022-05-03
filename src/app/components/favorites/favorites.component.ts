@@ -66,28 +66,26 @@ export class FavoritesComponent implements OnInit {
 
 
   deleteFromList(listName: 'watchlist' | 'favorites', movieId: number, movieTitle: string, posterPath: string) {
-    this.userService.getUID.subscribe((user) => {
-      if (listName === 'watchlist') {
-        this.firebaseService.deleteFromWatchlist(user, movieId, movieTitle, posterPath)
+    if (listName === 'watchlist') {
+      this.firebaseService.deleteFromWatchlist(this.currentUserId, movieId, movieTitle, posterPath)
 
-        this.watchList.forEach((movie: any, index: any) => {
-          if (movie.movieId == movieId) {
-            this.watchList.splice(index, 1)
-          }
+      this.watchList.forEach((movie: any, index: any) => {
+        if (movie.movieId == movieId) {
+          this.watchList.splice(index, 1)
+        }
 
-        })
-      } else {
-        this.firebaseService.deleteFromFavorites(user, movieId, movieTitle, posterPath)
+      })
+    } else {
+      this.firebaseService.deleteFromFavorites(this.currentUserId, movieId, movieTitle, posterPath)
 
-        this.favorites.forEach((movie: any, index: any) => {
-          if (movie.movieId == movieId) {
-            this.favorites.splice(index, 1)
-          }
+      this.favorites.forEach((movie: any, index: any) => {
+        if (movie.movieId == movieId) {
+          this.favorites.splice(index, 1)
+        }
 
-        })
+      })
 
-      }
-    })
+    }
   }
 
 

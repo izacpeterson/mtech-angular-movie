@@ -165,6 +165,3 @@ export class LoginComponent implements OnInit {
     this.googleLogin = false;
   }
 }
-function movieId(movieId: any): any {
-  throw new Error('Function not implemented.');
-}

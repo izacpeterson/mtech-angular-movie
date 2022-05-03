@@ -160,14 +160,12 @@ export class SearchComponent implements OnInit {
 
   addToWatchList(movieId: number, posterPath: string, movieTitle: string) {
     this.userService.getUID.pipe(take(1), map((user: any) => {
-      console.log('USER', user);
       this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
     })).subscribe()
 
   }
   addToFavorites(movieId: number, posterPath: string, movieTitle: string) {
     this.userService.getUID.pipe(take(1), map((user: any) => {
-      console.log('USER', user);
       this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
     })).subscribe()
   }

@@ -229,17 +229,17 @@ export class MovieDetailsComponent implements OnInit {
   getRating() { }
 
   addToWatchList(movieId: number, posterPath: any, movieTitle: any) {
-    this.userService.getUID.subscribe((user: any) => {
-      //console.log('inside function', user);
+    this.userService.getUID.pipe(take(1), map((user: any) => {
+      console.log('USER', user);
       this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
-    })
+    })).subscribe()
   }
 
   addToFavorites(movieId: number, posterPath: any, movieTitle: any) {
-    this.userService.getUID.subscribe((user: any) => {
-      console.log('inside function', user);
+    this.userService.getUID.pipe(take(1), map((user: any) => {
+      console.log('USER', user);
       this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
-    })
+    })).subscribe()
   }
 
   backClicked() {

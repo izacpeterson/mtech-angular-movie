@@ -155,9 +155,11 @@ export class LoginComponent implements OnInit {
   }
   setGoogleLogin() {
     this.googleLogin = true;
+    this.emailSignUp = false;
   }
   setEmailLogin() {
     this.googleLogin = false;
+    this.emailSignUp = false;
   }
   setEmailSignUp() {
     this.googleLogin = false;

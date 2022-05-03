@@ -43,7 +43,7 @@ export class MovieDetailsComponent implements OnInit {
   ];
   chatBar: string = '';
   chatName: string = '';
-  chatList: any = []; //{ user: 'user1', message: 'hi' };
+  // chatList: any = []; //{ user: 'user1', message: 'hi' };
   comments: any = [];
   ratingValue: number = 0;
 
@@ -173,28 +173,19 @@ export class MovieDetailsComponent implements OnInit {
       this.ratingValue = this.userRating * 20;
     });
     // console.log(this.movieRating);
-    this.createMovieDoc();
+    setDoc(
+      doc(this.db, 'movies', this.movieId.toString()),
+      {},
+      { merge: true }
+    );
 
     // initialize comments array
     this.firebaseService.getComments(this.movieId.toString()).then(comments => {
-      this.comments = comments;
+      if (comments) {
+        this.comments = comments;
+      }
     });
 
-  }
-
-
-  async createMovieDoc() {
-    const docRef = doc(this.db, 'movies', this.movieId.toString());
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      setDoc(
-        doc(this.db, 'movies', this.movieId.toString()),
-        {
-          comments: [],
-        },
-        { merge: true }
-      );
-    }
   }
 
   getImageUrl() {
@@ -230,19 +221,17 @@ export class MovieDetailsComponent implements OnInit {
 
   addToWatchList(movieId: number, posterPath: any, movieTitle: any) {
     this.userService.getUID.pipe(take(1), map((user: any) => {
-      console.log('USER', user);
       this.firebaseService.addToWatchList(movieId, user, posterPath, movieTitle)
     })).subscribe()
   }
 
   addToFavorites(movieId: number, posterPath: any, movieTitle: any) {
     this.userService.getUID.pipe(take(1), map((user: any) => {
-      console.log('USER', user);
       this.firebaseService.addToFavorites(movieId, user, posterPath, movieTitle)
     })).subscribe()
   }
 
-  backClicked() {
-    this.location.back();
-  }
+  // backClicked() {
+  //   this.location.back();
+  // }
 }

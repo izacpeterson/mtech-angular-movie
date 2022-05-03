@@ -33,6 +33,9 @@ export class LoginComponent implements OnInit {
   db = getFirestore(this.app);
 
   googleLogin: boolean = true;
+  emailSignUp: boolean = false;
+  username: string = ''
+
   currentScreenSize: string = '';
   XSmallScreen: boolean = false;
 
@@ -83,14 +86,6 @@ export class LoginComponent implements OnInit {
   password = '';
   hide = true;
   username = '';
-
-  // getErrorMessage() {
-  //   if (this.email.hasError('required')) {
-  //     return 'You must enter a value';
-  //   }
-
-  //   return this.email.hasError('email') ? 'Not a valid email' : '';
-  // }
 
   loginUser(): void {
     const auth = getAuth();
@@ -172,5 +167,9 @@ export class LoginComponent implements OnInit {
   }
   setEmailLogin() {
     this.googleLogin = false;
+  }
+  setEmailSignUp() {
+    this.googleLogin = false;
+    this.emailSignUp = true;
   }
 }

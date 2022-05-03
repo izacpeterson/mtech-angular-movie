@@ -13,8 +13,6 @@ export class AppComponent {
     private firebase: FirebaseApiService
   ) {}
 
-  ngOnInit() {
-    this.firebase.init();
-  }
+  ngOnInit() {}
 
 }

@@ -223,7 +223,7 @@ export class FirebaseApiService {
     // }
 
     onSnapshot(docRef, (doc) => {
-      let data = doc.data()?.ratings;
+      let data = doc.data()?.ratings || [];
       let total = 0;
       data.forEach((value: number) => {
         total += value;

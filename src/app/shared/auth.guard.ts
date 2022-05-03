@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.userService.isLoggedIn !== true) {
-      window.alert('Access Denied, Login is Required to Access This Page')
       this.router.navigate(['login'])
     }
     return true;

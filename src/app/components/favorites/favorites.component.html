@@ -1,7 +1,8 @@
 <div class="rows">
     <div>
         <h1 class="rowTitle">Favorites:</h1>
-        <div class="movieContainer" *ngIf="favorites">
+        <div class="movieContainer" *ngIf="favorites"
+            [ngClass]="XSmallScreen ? 'xsmall-movie-container' : 'movie-container'">
             <div *ngFor="let movie of favorites">
                 <div class="customCard">
 
@@ -42,7 +43,8 @@
 
     <div>
         <h1 class="rowTitle">Watch List:</h1>
-        <div class="movieContainer" *ngIf="watchList">
+        <div class="movieContainer" *ngIf="watchList"
+            [ngClass]="XSmallScreen ? 'xsmall-movie-container' : 'movie-container'">
             <div *ngFor="let movie of watchList">
                 <div class="customCard">
 
@@ -55,7 +57,7 @@
                             <button mat-menu-item
                                 (click)="deleteFromList('watchlist', movie.movieId, movie.movieTitle, movie.posterPath)">
                                 <mat-icon>close</mat-icon>
-                                <span>Remove from Watch List</span>
+                                <span>Remove from Watchlist</span>
                             </button>
                             <button mat-menu-item routerLink="/details/{{movie.movieId}}">
                                 <mat-icon>info</mat-icon>

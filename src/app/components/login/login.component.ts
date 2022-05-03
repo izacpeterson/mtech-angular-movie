@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/user.service';
@@ -31,6 +32,8 @@ export class LoginComponent implements OnInit {
   db = getFirestore(this.app);
 
   googleLogin: boolean = true;
+  emailSignUp: boolean = false;
+
   currentScreenSize: string = '';
   XSmallScreen: boolean = false;
 
@@ -73,13 +76,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserEmail.subscribe((email) => {
-      //console.log(email);
     });
   }
 
   email = '';
   password = '';
   hide = true;
+  username = '';
 
   loginUser(): void {
     const auth = getAuth();
@@ -91,13 +94,9 @@ export class LoginComponent implements OnInit {
         const token = credential!.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(result.user);
         localStorage.setItem('loggedIn', 'true');
         //create user doc in firestore
-        setDoc(
-          doc(this.db, 'users', user.uid), {},
-          { merge: true }
-        );
+        setDoc(doc(this.db, 'users', user.uid), {}, { merge: true });
 
         this.router.navigate(['search']);
         // ...
@@ -115,18 +114,40 @@ export class LoginComponent implements OnInit {
   }
   emailLogin() {
     const auth = getAuth();
-    // console.log(this.email, this.password);
+    signInWithEmailAndPassword(auth, this.email, this.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        localStorage.setItem('loggedIn', 'true');
+
+        this.router.navigate(['search']);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        this.signUp();
+      });
+  }
+  signUp() {
+    const auth = getAuth();
     createUserWithEmailAndPassword(auth, this.email, this.password)
       .then((userCredential) => {
         // Signed in
-        console.log('created');
 
         const user = userCredential.user;
         localStorage.setItem('loggedIn', 'true');
-        setDoc(
-          doc(this.db, 'users', user.uid), {},
-          { merge: true }
-        );
+        setDoc(doc(this.db, 'users', user.uid), {}, { merge: true });
+
+        if (auth.currentUser) {
+          updateProfile(auth.currentUser, {
+            displayName: this.username,
+          })
+            .then(() => {
+              console.log('Username Set');
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+
         this.router.navigate(['search']);
 
         // ...
@@ -136,24 +157,19 @@ export class LoginComponent implements OnInit {
         const errorMessage = error.message;
         console.log(errorMessage);
 
-        signInWithEmailAndPassword(auth, this.email, this.password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            localStorage.setItem('loggedIn', 'true');
-
-            this.router.navigate(['search']);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-
         // ..
       });
   }
   setGoogleLogin() {
     this.googleLogin = true;
+    this.emailSignUp = false;
   }
   setEmailLogin() {
     this.googleLogin = false;
+    this.emailSignUp = false;
+  }
+  setEmailSignUp() {
+    this.googleLogin = false;
+    this.emailSignUp = true;
   }
 }

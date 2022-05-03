@@ -14,32 +14,20 @@
   </div>
   <div *ngIf="!googleLogin" class="email">
     <form action="">
+      <mat-form-field *ngIf="emailSignUp">
+        <mat-label>Enter your username</mat-label>
+        <input [(ngModel)]="username" name="username" matInput placeholder="Jane Doe" required />
+      </mat-form-field>
       <mat-form-field>
         <mat-label>Enter your email</mat-label>
-        <input
-          [(ngModel)]="email"
-          name="email"
-          matInput
-          placeholder="pat@example.com"
-          required
-        />
+        <input [(ngModel)]="email" name="email" matInput placeholder="pat@example.com" required />
         <!-- <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error> -->
       </mat-form-field>
       <mat-form-field>
         <mat-label>Enter your password</mat-label>
-        <input
-          [(ngModel)]="password"
-          name="password"
-          matInput
-          [type]="hide ? 'password' : 'text'"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
+        <input [(ngModel)]="password" name="password" matInput [type]="hide ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
@@ -48,4 +36,7 @@
       </button>
     </form>
   </div>
+  <button (click)="setEmailSignUp()" class="login-type-btn">
+    Sign Up with Email and Password
+  </button>
 </div>

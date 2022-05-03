@@ -81,14 +81,6 @@ export class LoginComponent implements OnInit {
   password = '';
   hide = true;
 
-  // getErrorMessage() {
-  //   if (this.email.hasError('required')) {
-  //     return 'You must enter a value';
-  //   }
-
-  //   return this.email.hasError('email') ? 'Not a valid email' : '';
-  // }
-
   loginUser(): void {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();

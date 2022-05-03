@@ -33,7 +33,7 @@ export class FirebaseApiService {
   moviesRef: any;
   commentsRef: any;
 
-  constuctor() {}
+  constuctor() { }
 
   // initialize firebase app
   async init() {

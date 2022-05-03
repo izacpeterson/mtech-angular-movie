@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserEmail.subscribe((email) => {
-      console.log(email);
+      //console.log(email);
     });
   }
 

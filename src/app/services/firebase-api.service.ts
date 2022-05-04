@@ -33,7 +33,9 @@ export class FirebaseApiService {
   moviesRef: any;
   commentsRef: any;
 
-  constuctor() { }
+  constructor() {
+    // console.log(User)
+  }
 
   // initialize firebase app
   async init() {
@@ -150,6 +152,7 @@ export class FirebaseApiService {
   // ratings
   //
 
+
   // return movie.rating
   async getPublicRating(movieId: string) {
     const movie = await this.getMovie(movieId);
@@ -160,6 +163,11 @@ export class FirebaseApiService {
   async getRatings(movieId: string) {
     const movie = await this.getMovie(movieId);
     return movie?.ratings;
+  }
+
+  // search for movie rating from specified userId
+  async getRatingByUid(movieId: string, uid: string) {
+
   }
 
   // set avg movie rating to custom value
@@ -204,6 +212,8 @@ export class FirebaseApiService {
         ratings: newArr,
       });
     }
+
+    const ratings = await this.getRatings(movieId);
   }
 
   async getRating(movieId: string, callback: Function) {

@@ -2,18 +2,10 @@
 
   <span class="left">
     <div class="back-button-container">
-      <button
-        mat-button
-        class="back-button-enabled"
-        (click)="backClicked()"
-        *ngIf="backButtonEnabled()">
+      <button mat-button class="back-button-enabled" (click)="backClicked()" *ngIf="backButtonEnabled()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <button
-        mat-button
-        class="back-button-disabled"
-        *ngIf="!backButtonEnabled()"
-        style="color: #aaa; cursor: default">
+      <button mat-button class="back-button-disabled" *ngIf="!backButtonEnabled()" style="color: #aaa; cursor: default">
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
@@ -49,18 +41,10 @@
 
   <span class="left">
     <div class="back-button-container">
-      <button
-        mat-button
-        class="back-button-enabled"
-        (click)="backClicked()"
-        *ngIf="backButtonEnabled()">
+      <button mat-button class="back-button-enabled" (click)="backClicked()" *ngIf="backButtonEnabled()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <button
-        mat-button
-        class="back-button-disabled"
-        *ngIf="!backButtonEnabled()"
-        style="color: #aaa; cursor: default">
+      <button mat-button class="back-button-disabled" *ngIf="!backButtonEnabled()" style="color: #aaa; cursor: default">
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
@@ -73,7 +57,7 @@
     <button mat-button [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu="matMenu" xPosition="before">
       <span mat-menu-item>{{navName}}</span>
       <button mat-menu-item routerLink="/favorites">Favorites</button>
       <button mat-menu-item routerLink="/search">Search</button>
